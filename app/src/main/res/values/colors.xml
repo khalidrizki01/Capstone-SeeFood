@@ -11,4 +11,11 @@
     <color name="button_color">#1E573B</color>
     <color name="yellow">#FFEB3B</color>
     <color name="red">#F44336</color>
+
+    <color name="color1">#C7DB00</color>
+    <color name="color2">#7AA802</color>
+    <color name="color3">#F78B2D</color>
+    <color name="color4">#E4B600</color>
+
+
 </resources>
