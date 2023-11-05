@@ -20,7 +20,7 @@ interface FoodDao {
     @Insert
     fun insert(vararg foods : Food)
 
-    @Query("DELETE FROM book")
+    @Query("DELETE FROM food")
     fun deleteAll()
     @Update
     fun updateFood(food: Food)
