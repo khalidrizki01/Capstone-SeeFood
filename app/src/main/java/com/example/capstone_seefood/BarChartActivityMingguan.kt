@@ -2,17 +2,16 @@ package com.example.capstone_seefood
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.example.capstone_seefood.databinding.ActivityBarChartBinding
+import com.example.capstone_seefood.databinding.ActivityBarChartMingguanBinding
 
 class BarChartActivityMingguan : AppCompatActivity() {
 
-    private var _binding: ActivityBarChartBinding? = null
+    private var _binding: ActivityBarChartMingguanBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityBarChartBinding.inflate(layoutInflater)
+        _binding = ActivityBarChartMingguanBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.apply {
             print("helo")
@@ -22,7 +21,7 @@ class BarChartActivityMingguan : AppCompatActivity() {
 
         }
         binding.btnHarian?.setOnClickListener{
-            startActivity(Intent(this@BarChartActivityMingguan,BarChartActivity::class.java))
+            startActivity(Intent(this@BarChartActivityMingguan,MainActivity::class.java))
         }
         binding.btnBulanan?.setOnClickListener{
             startActivity(Intent(this@BarChartActivityMingguan,BarChartActivityBulanan::class.java))

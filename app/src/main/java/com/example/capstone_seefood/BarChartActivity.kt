@@ -3,16 +3,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.graphics.Color
-import android.graphics.Typeface
 import com.example.capstone_seefood.databinding.ActivityBarChartBinding
-import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import com.github.mikephil.charting.utils.MPPointF
+
 class BarChartActivity : AppCompatActivity() {
     private var _binding: ActivityBarChartBinding? = null
     private val binding get() = _binding!!

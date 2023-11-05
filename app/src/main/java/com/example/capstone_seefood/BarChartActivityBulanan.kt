@@ -2,7 +2,6 @@ package com.example.capstone_seefood
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.example.capstone_seefood.databinding.ActivityBarChartBinding
 
 class BarChartActivityBulanan : AppCompatActivity() {
@@ -22,7 +21,7 @@ class BarChartActivityBulanan : AppCompatActivity() {
 
         }
         binding.btnHarian?.setOnClickListener{
-            startActivity(Intent(this@BarChartActivityBulanan,BarChartActivity::class.java))
+            startActivity(Intent(this@BarChartActivityBulanan,MainActivity::class.java))
         }
         binding.btnMingguan?.setOnClickListener{
             startActivity(Intent(this@BarChartActivityBulanan,BarChartActivityMingguan::class.java))
