@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.capstone_seefood.databinding.ActivityBarChartBinding
 
-class BarChartActivityMingguan : AppCompatActivity() {
+class BarChartActivityBulanan : AppCompatActivity() {
 
     private var _binding: ActivityBarChartBinding? = null
     private val binding get() = _binding!!
@@ -22,10 +22,10 @@ class BarChartActivityMingguan : AppCompatActivity() {
 
         }
         binding.btnHarian?.setOnClickListener{
-            startActivity(Intent(this@BarChartActivityMingguan,BarChartActivity::class.java))
+            startActivity(Intent(this@BarChartActivityBulanan,BarChartActivity::class.java))
         }
-        binding.btnBulanan?.setOnClickListener{
-            startActivity(Intent(this@BarChartActivityMingguan,BarChartActivityBulanan::class.java))
+        binding.btnMingguan?.setOnClickListener{
+            startActivity(Intent(this@BarChartActivityBulanan,BarChartActivityMingguan::class.java))
     }
     }
     override fun onDestroy() {
@@ -37,12 +37,12 @@ class BarChartActivityMingguan : AppCompatActivity() {
 
         var totaljual = arrayOf(4,7,2,3,5,4)
         private val barSet = listOf(
-            "Ayam Guling Kukus \n${totaljual[0]}" to 40F,
-            "Babi Panggang" to 7F,
-            "Bakpia Bakar Mozarella" to 2F,
-            "Sapi Geprek Sambal Terasi" to 2.3F,
-            "Pisang Tumis Blackpepper" to 5F,
-            "Kerang Saus Mentai" to 4F
+            "Ayam Guling Kukus \n${totaljual[0]}" to 10F,
+            "Babi Panggang" to 27F,
+            "Bakpia Bakar Mozarella" to 24F,
+            "Sapi Geprek Sambal Terasi" to 223F,
+            "Pisang Tumis Blackpepper" to 1F,
+            "Kerang Saus Mentai" to 11F
         )
 
 
