@@ -7,11 +7,17 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.room.Room
 import com.example.capstone_seefood.databinding.ActivityConfirmPaymentBinding
+import com.example.capstone_seefood.db.Food
+import com.example.capstone_seefood.db.FoodDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ConfirmPaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfirmPaymentBinding
     private lateinit var btnConfirmPayment : Button
+    lateinit var db : FoodDatabase
 
     val data = listOf(
         listOf("Nasi Goreng", "2", "Rp 15,000", "Rp 30,000"),
@@ -20,6 +26,8 @@ class ConfirmPaymentActivity : AppCompatActivity() {
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        db = Room.databaseBuilder(applicationContext, FoodDatabase::class.java, "food-db").build()
+
         binding = ActivityConfirmPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -36,6 +44,24 @@ class ConfirmPaymentActivity : AppCompatActivity() {
             binding.tbOrder.addView(tableRow, count)
             count++
         }
+        GlobalScope.launch {
+            deleteData()
+            initData()
+        }
+
+
 //        binding.btnConfirmPayment.setOnClickListener(this)
+    }
+
+    private fun deleteData() {
+
+    }
+    private fun initData() {
+        val food1 = Food("Nasi Goreng", 2, 15000, true)
+        val food2 = Food("Mie Goreng", 1, 12,true)
+
+        //insert data ke database
+        db.foodDao().insert(food1)
+        db.foodDao().insert(food2)
     }
 }
