@@ -1,10 +1,12 @@
 package com.example.capstone_seefood.db
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
+@Dao
 interface FoodDao {
     @Query("SELECT * FROM food")
     fun getAllFoods():List<Food>
