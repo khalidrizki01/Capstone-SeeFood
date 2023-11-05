@@ -1,17 +1,22 @@
 package com.example.capstone_seefood
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.capstone_seefood.databinding.ActivityBarChartBinding
+import com.example.capstone_seefood.databinding.ActivityMainBinding
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 
 class BarChartActivityBulanan : AppCompatActivity() {
 
-    private var _binding: ActivityBarChartBinding? = null
+    private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityBarChartBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.apply {
             print("helo")
@@ -26,6 +31,29 @@ class BarChartActivityBulanan : AppCompatActivity() {
         binding.btnMingguan?.setOnClickListener{
             startActivity(Intent(this@BarChartActivityBulanan,BarChartActivityMingguan::class.java))
     }
+        val list:ArrayList<PieEntry> = ArrayList()
+
+        list.add(PieEntry(230f,"100"))
+        list.add(PieEntry(111f,"101"))
+        list.add(PieEntry(412f,"102"))
+        list.add(PieEntry(253f,"103"))
+        list.add(PieEntry(104f,"104"))
+
+        val pieDataSet= PieDataSet(list,"List")
+
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
+        pieDataSet.valueTextColor= Color.BLACK
+        pieDataSet.valueTextSize=15f
+
+        val pieData= PieData(pieDataSet)
+
+        binding.pieChart!!.data= pieData
+
+        binding.pieChart!!.description.text= "Pie Chart"
+
+        binding.pieChart!!.centerText="List"
+
+        binding.pieChart!!.animateY(2000)
     }
     override fun onDestroy() {
         super.onDestroy()
