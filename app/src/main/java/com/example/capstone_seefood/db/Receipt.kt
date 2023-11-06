@@ -8,11 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 @Entity
 @Parcelize
-data class Food(
+data class Receipt(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "food_id") val foodId : Long,
-    val name : String,
-    val price : Int? = null,
-    val photo : Int,
-    @ColumnInfo(name = "is_sell")val isSell : Boolean = false
+    @ColumnInfo(name = "receipt_id") val receiptId : Long
 ) : Parcelable
