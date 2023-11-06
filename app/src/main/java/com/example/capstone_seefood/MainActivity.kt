@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.capstone_seefood.ChartData.BarChartActivityBulanan
+import com.example.capstone_seefood.ChartData.BarChartActivityMingguan
 import com.example.capstone_seefood.databinding.ActivityMainBinding
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -29,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnBulanan.setOnClickListener {
             startActivity(Intent(this@MainActivity, BarChartActivityBulanan::class.java))
+        }
+        binding.btnPenjualan.setOnClickListener {
+            startActivity(Intent(this@MainActivity, manage_price::class.java))
+        }
+        binding.btnRiwayatTransaksi.setOnClickListener {
+            startActivity(Intent(this@MainActivity,HistoryPenjualanActivity::class.java))
         }
 
         val list:ArrayList<PieEntry> = ArrayList()

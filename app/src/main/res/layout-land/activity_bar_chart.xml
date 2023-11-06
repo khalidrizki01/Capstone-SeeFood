@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#90CAF9"
-    tools:context=".BarChartActivity">
+    tools:context=".ChartData.BarChartActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/barchart_mid_vertical_guide"

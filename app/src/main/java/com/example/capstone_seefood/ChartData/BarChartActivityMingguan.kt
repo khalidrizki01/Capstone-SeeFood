@@ -1,15 +1,16 @@
-package com.example.capstone_seefood
+package com.example.capstone_seefood.ChartData
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.capstone_seefood.MainActivity
 import com.example.capstone_seefood.databinding.ActivityMainBinding
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 
-class BarChartActivityBulanan : AppCompatActivity() {
+class BarChartActivityMingguan : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -26,18 +27,18 @@ class BarChartActivityBulanan : AppCompatActivity() {
 
         }
         binding.btnHarian?.setOnClickListener{
-            startActivity(Intent(this@BarChartActivityBulanan,MainActivity::class.java))
+            startActivity(Intent(this@BarChartActivityMingguan, MainActivity::class.java))
         }
-        binding.btnMingguan?.setOnClickListener{
-            startActivity(Intent(this@BarChartActivityBulanan,BarChartActivityMingguan::class.java))
+        binding.btnBulanan?.setOnClickListener{
+            startActivity(Intent(this@BarChartActivityMingguan, BarChartActivityBulanan::class.java))
     }
         val list:ArrayList<PieEntry> = ArrayList()
 
-        list.add(PieEntry(230f,"100"))
-        list.add(PieEntry(111f,"101"))
-        list.add(PieEntry(412f,"102"))
-        list.add(PieEntry(253f,"103"))
-        list.add(PieEntry(104f,"104"))
+        list.add(PieEntry(250f,"100"))
+        list.add(PieEntry(511f,"101"))
+        list.add(PieEntry(202f,"102"))
+        list.add(PieEntry(153f,"103"))
+        list.add(PieEntry(214f,"104"))
 
         val pieDataSet= PieDataSet(list,"List")
 
@@ -64,12 +65,12 @@ class BarChartActivityBulanan : AppCompatActivity() {
 
         var totaljual = arrayOf(4,7,2,3,5,4)
         private val barSet = listOf(
-            "Ayam Guling Kukus \n${totaljual[0]}" to 10F,
-            "Babi Panggang" to 27F,
-            "Bakpia Bakar Mozarella" to 24F,
-            "Sapi Geprek Sambal Terasi" to 223F,
-            "Pisang Tumis Blackpepper" to 1F,
-            "Kerang Saus Mentai" to 11F
+            "Ayam Guling Kukus \n${totaljual[0]}" to 40F,
+            "Babi Panggang" to 7F,
+            "Bakpia Bakar Mozarella" to 2F,
+            "Sapi Geprek Sambal Terasi" to 2.3F,
+            "Pisang Tumis Blackpepper" to 5F,
+            "Kerang Saus Mentai" to 4F
         )
 
 
