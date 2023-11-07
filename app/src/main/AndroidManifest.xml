@@ -22,7 +22,6 @@
         <activity
             android:name=".ConfirmPaymentActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
