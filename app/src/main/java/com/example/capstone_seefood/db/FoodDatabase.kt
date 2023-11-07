@@ -15,7 +15,7 @@ import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
     version=1
 )
 abstract class FoodDatabase : RoomDatabase() {
-    abstract fun foodDao() : FoodDao
+    abstract val foodDao : FoodDao
 
     companion object {
         @Volatile
@@ -27,7 +27,7 @@ abstract class FoodDatabase : RoomDatabase() {
                     context.applicationContext,
                     FoodDatabase::class.java,
                     "food-db"
-                ).build().also{
+                ).fallbackToDestructiveMigration().build().also{
                     INSTANCE = it
                 }
             }

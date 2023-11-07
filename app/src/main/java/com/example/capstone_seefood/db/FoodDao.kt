@@ -7,8 +7,10 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.example.capstone_seefood.db.relations.FoodWithReceipts
+//import com.example.capstone_seefood.db.relations.FoodWithReceipts
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 import com.example.capstone_seefood.db.relations.ReceiptWithFoods
+import java.util.UUID
 
 @Dao
 interface FoodDao {
@@ -27,21 +29,21 @@ interface FoodDao {
 //    Insert Many Receipt Food Cross Ref: Ketika menyimpan data receipt?
 
 //  Untuk menngambil data makanan yang dijual
-    @Query("SELECT * FROM food WHERE is_sell = 1")
+    @Query("SELECT * FROM food WHERE issell = 1")
     fun getAvailableFood(): List<Food>
 
 //  Untuk mengambil data makanan yang tidak dijual
-    @Query("SELECT * FROM food WHERE is_sell = 0")
+    @Query("SELECT * FROM food WHERE issell = 0")
     fun getUnavailableFood(): List<Food>
 
 //  Untuk mengambil data makanan yang terjual dari satu nota/penjualan
     @Transaction
-    @Query("SELECT * FROM receipt WHERE receipt_id = :receiptId")
-    suspend fun getReceiptWithFoods(receiptId : Long) : List<ReceiptWithFoods>
+    @Query("SELECT * FROM receipt WHERE receiptid = :receiptId")
+    suspend fun getReceiptWithFoods(receiptId : UUID) : List<ReceiptWithFoods>
 
 //  Untuk mengambil data penjualan dari satu makanan
     @Transaction
-    @Query("SELECT * FROM food WHERE food_id = :foodId")
+    @Query("SELECT * FROM food WHERE foodid = :foodId")
     suspend fun getFoodWithReceipts(foodId : Long) : List<FoodWithReceipts>
 
     @Query("DELETE FROM food")

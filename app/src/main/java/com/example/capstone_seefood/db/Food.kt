@@ -5,14 +5,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
+import java.util.UUID
 
 @Entity
 @Parcelize
 data class Food(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "food_id") val foodId : Long,
+    @PrimaryKey //(autoGenerate = true)
+    val foodId : UUID,
     val name : String,
     val price : Int? = null,
     val photo : Int,
-    @ColumnInfo(name = "is_sell")val isSell : Boolean = false
+    val isSell : Boolean = false
 ) : Parcelable
