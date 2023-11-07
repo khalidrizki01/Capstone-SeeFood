@@ -57,5 +57,7 @@ class ConfirmPaymentActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    fun goToReceiptActivity() {
 
+    }
 }
