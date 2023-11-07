@@ -47,7 +47,14 @@
             android:screenOrientation="landscape"
             android:name=".HistoryPenjualanActivity">
 
+
+        </activity>
+        <activity
+            android:screenOrientation="landscape"
+            android:name=".ScanActivity">
+
+
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.CAMERA"/>
 </manifest>
