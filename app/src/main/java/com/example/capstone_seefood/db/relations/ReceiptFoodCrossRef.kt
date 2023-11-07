@@ -6,5 +6,6 @@ import androidx.room.Entity
 data class ReceiptFoodCrossRef(
     val receiptId: Long,
     val foodId: Long,
-    val quantity: Int
+    val quantity: Int,
+    val totalItemPrice: Int
 )

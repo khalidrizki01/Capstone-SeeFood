@@ -24,6 +24,8 @@ interface FoodDao {
     @Insert
     suspend fun insertReceiptFoodCrossRef(crossRef: ReceiptFoodCrossRef)
 
+//    Insert Many Receipt Food Cross Ref: Ketika menyimpan data receipt?
+
 //  Untuk menngambil data makanan yang dijual
     @Query("SELECT * FROM food WHERE is_sell = 1")
     fun getAvailableFood(): List<Food>
