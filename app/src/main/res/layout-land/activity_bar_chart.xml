@@ -5,23 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#90CAF9"
-    tools:context=".BarChartActivity">
+    tools:context=".ChartData.BarChartActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/barchart_mid_vertical_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 
     <com.db.williamchart.view.BarChartView
         android:id="@+id/barChart"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginRight="20dp"
         app:chart_axis="x"
         app:chart_barsColor="#fff"
         app:chart_barsRadius="4dp"
         app:chart_labelsColor="#0D47A1"
         app:chart_labelsSize="10sp"
         app:chart_spacing="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pie_chart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,28 +46,45 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnMingguan"
-        android:layout_width="95dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="44dp"
-        android:text="Mingguan"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/tvChartName"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/btnBulanan"
         android:layout_width="95dp"
         android:layout_height="37dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="12dp"
 
         android:text="Bulanan"
         android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/btnMingguan"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnMingguan"
+        android:layout_width="95dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="12dp"
+        android:text="Mingguan"
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/btnHarian"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnHarian"
+        android:layout_width="95dp"
+        android:layout_height="37dp"
+        android:text="Harian"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/barchart_mid_vertical_guide"
+        app:layout_constraintTop_toTopOf="parent" />
     <!--Ui component for our pie chart-->
 
 <!--    <com.github.mikephil.charting.charts.PieChart-->

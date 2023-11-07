@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90CAF9"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/barchart_mid_vertical_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/barchart_mid_vertical_guide2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <com.db.williamchart.view.BarChartView
+        android:id="@+id/barChart"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        app:chart_axis="x"
+        app:chart_barsColor="#fff"
+        app:chart_barsRadius="4dp"
+        app:chart_labelsColor="#0D47A1"
+        app:chart_labelsSize="10sp"
+        app:chart_spacing="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/pie_chart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.db.williamchart.view.BarChartView>
+
+    <TextView
+        android:id="@+id/tvChartName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="32dp"
+        android:text="Laporan Penjualan"
+        android:textColor="#0D47A1"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/barChart"
+        app:layout_constraintEnd_toStartOf="@+id/barchart_mid_vertical_guide"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnBulanan"
+        android:layout_width="95dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="12dp"
+        android:backgroundTint="#55a1df"
+
+        android:text="Bulanan"
+        android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btnMingguan"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnMingguan"
+        android:layout_width="95dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="12dp"
+        android:backgroundTint="#55a1df"
+        android:text="Mingguan"
+        android:textSize="10dp"
+        app:layout_constraintStart_toEndOf="@+id/btnHarian"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnHarian"
+        android:layout_width="95dp"
+        android:layout_height="37dp"
+        android:backgroundTint="#55a1df"
+        android:text="Harian"
+        android:textSize="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_chart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/barchart_mid_vertical_guide"
+        app:layout_constraintEnd_toStartOf="@id/barchart_mid_vertical_guide2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pie_chart"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#55a1df">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnModeScan"
+                android:layout_width="132dp"
+                android:layout_height="58dp"
+                android:layout_marginBottom="80dp"
+                android:backgroundTint="#55a1df"
+                android:drawableLeft="@android:drawable/ic_menu_camera"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/black"
+                android:text="SEE FOOD"
+                app:layout_constraintBottom_toTopOf="@+id/btnRiwayatTransaksi"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <Button
+                android:id="@+id/btnPenjualan"
+                android:layout_width="131dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="80dp"
+                android:backgroundTint="#55a1df"
+                android:drawableLeft="@android:drawable/ic_input_add"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/black"
+                android:text="Tambah Menu"
+                android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRiwayatTransaksi"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/btnRiwayatTransaksi"
+                android:layout_width="124dp"
+                android:layout_height="65dp"
+                android:background="#55a1df"
+                android:backgroundTint="#55a1df"
+                android:drawableLeft="@android:drawable/ic_menu_recent_history"
+                android:drawablePadding="1dp"
+                android:drawableTint="#d0d0d0d0"
+                android:text="Riwayat"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="303dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="61dp"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/barchart_mid_vertical_guide"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/barChart">
+
+        <TextView
+            android:id="@+id/tvRevenue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Penjualan Hari Ini:"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="15dp"
+            tools:layout_editor_absoluteY="624dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvTotalRevenue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rp. 5.000.000"
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="303dp"
+        android:layout_height="95dp"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/barchart_mid_vertical_guide"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+        <TextView
+            android:id="@+id/tvStarMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Menu Terlaris Hari Ini:"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="15dp"
+            tools:layout_editor_absoluteY="624dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvFavoriteMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ayam Guling "
+                android:textSize="40sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

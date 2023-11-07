@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.room.Room
 import com.example.capstone_seefood.databinding.ActivityConfirmPaymentBinding
 import com.example.capstone_seefood.db.Food
 import com.example.capstone_seefood.db.FoodDatabase
@@ -82,7 +81,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         }
     }
 
-    fun goToReceiptActivity() {
-
+    private fun goToReceiptActivity() {
+        TODO("Not yet implemented")
     }
 }
