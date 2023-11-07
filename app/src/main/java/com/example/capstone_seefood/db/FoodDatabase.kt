@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 
 @Database(
@@ -12,8 +13,9 @@ import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
         Receipt::class,
         ReceiptFoodCrossRef::class
     ],
-    version=1
+    version=2
 )
+@TypeConverters(LocalDateTimeConverter::class)
 abstract class FoodDatabase : RoomDatabase() {
     abstract val foodDao : FoodDao
 

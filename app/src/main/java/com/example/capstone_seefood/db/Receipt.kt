@@ -6,6 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.UUID
 data class Receipt(
     @PrimaryKey //(autoGenerate = true)
     val receiptId : UUID,
-//    val createdAt: LocalDate = LocalDate.now(),
     val totalPrice: Int,
-    val totalTaxedPrice: Int
+    val totalTaxedPrice: Int,
+    val createdAt: LocalDateTime = LocalDateTime.now()
 ) : Parcelable
