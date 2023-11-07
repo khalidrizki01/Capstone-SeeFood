@@ -10,6 +10,7 @@ import com.example.capstone_seefood.db.relations.FoodWithReceipts
 //import com.example.capstone_seefood.db.relations.FoodWithReceipts
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 import com.example.capstone_seefood.db.relations.ReceiptWithFoods
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Dao
@@ -35,6 +36,9 @@ interface FoodDao {
 //  Untuk mengambil data makanan yang tidak dijual
     @Query("SELECT * FROM food WHERE issell = 0")
     fun getUnavailableFood(): List<Food>
+
+    @Query("SELECT * FROM receipt WHERE createdAt >= :date")
+    suspend fun getReceiptFrom(date: LocalDateTime) : List<Receipt>
 
 //  Untuk mengambil data makanan yang terjual dari satu nota/penjualan
     @Transaction
