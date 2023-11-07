@@ -4,6 +4,206 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color4"
     tools:context=".ReceiptActivity">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="164dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="528dp"
+        android:layout_marginTop="96dp"
+        android:text="@string/title_receipt"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="93dp"
+        android:layout_height="29dp"
+        android:text="SeeFood"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="563dp"
+        tools:layout_editor_absoluteY="170dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tanggal Pembelian"
+        android:textColor="@color/black"
+        android:textStyle="normal|bold"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="278dp" />
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="214dp"
+        android:layout_height="41dp"
+        android:ems="10"
+        android:inputType="date"
+        tools:layout_editor_absoluteX="870dp"
+        tools:layout_editor_absoluteY="263dp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="972dp"
+        android:layout_height="176dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="304dp"
+        android:background="@color/grey"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnReceipt"
+        app:layout_constraintEnd_toStartOf="@+id/guideline">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvRingkasanOrder"
+                style="@style/TextContent.HeadlineMedium"
+                android:text="Ringkasan Orderan"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+            <TableLayout
+                android:id="@+id/tbOrder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+
+                android:stretchColumns="*">
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="0dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Item Menu"
+                        android:gravity="center_horizontal"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_column="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_horizontal"
+                        android:text="Jumlah"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_horizontal"
+                        android:text="Harga Item"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="3"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_horizontal"
+                        android:text="Total Harga"
+                        android:textStyle="bold" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:text="Total Harga Makanan"
+                        android:gravity="center"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="32dp"
+                        android:text="0"
+                        android:layout_column="3"
+                        android:layout_gravity="right"
+                        android:textStyle="bold" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:text="Pembayaran"
+                        android:gravity="center"
+                        android:textStyle="normal" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="32dp"
+                        android:text="0"
+                        android:layout_column="3"
+                        android:layout_gravity="right"
+                        android:textStyle="bold" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:text="Kembalian"
+                        android:gravity="center"
+                        android:textStyle="normal" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="32dp"
+                        android:text="0"
+                        android:layout_column="3"
+                        android:layout_gravity="right"
+                        android:textStyle="bold" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="449dp"
+        android:layout_height="55dp"
+        android:onClick="saveChanges"
+        android:text="Print"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="754dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="449dp"
+        android:layout_height="55dp"
+        android:onClick="saveChanges"
+        android:text="Kirim"
+        tools:layout_editor_absoluteX="628dp"
+        tools:layout_editor_absoluteY="756dp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add New Note"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="820dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,10 @@
     <string name="pembayaran_sukses">Pembayaran Sukses</string>
     <string name="title_find_good">Find Good</string>
     <string name="title_food_around_you">Found Around You</string>
+    <string name="title_menu_dijual">Menu Dijual</string>
+    <string name="title_tambahkan_menu">Tambahkan Menu</string>
+    <string name="title_edit_menu_makanan">Edit Menu Makanan</string>
+    <string name="title_receipt">Receipt</string>
     <string name="txt_popular">Popular</string>
     <string name="txt_menu">Menu</string>
     <string name="txt_mie_goreng">Mie Goreng</string>

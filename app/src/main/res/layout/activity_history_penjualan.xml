@@ -4,19 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cbedc7"
-    tools:context=".ConfirmPaymentActivity">
+    android:background="#90CAF9">
+
+
+    <Button
+        android:id="@+id/btnHistoryMinggu"
+        android:layout_width="127dp"
+        android:layout_height="91dp"
+        android:text="7 Hari Terakhir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelinev2"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:id="@+id/btnHistoryBulan"
+        android:layout_width="127dp"
+        android:layout_height="91dp"
+        android:text="30 Hari Terakhir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelinev2"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistoryMinggu" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelinev2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelinev1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineh2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineh1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/grey"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnConfirmPayment"
         android:layout_margin="32dp"
-        app:cardCornerRadius="4dp">
+        android:background="@color/grey"
+        app:cardCornerRadius="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineh2"
+        app:layout_constraintEnd_toStartOf="@+id/guidelinev2"
+        app:layout_constraintStart_toStartOf="@+id/guidelinev1"
+        app:layout_constraintTop_toTopOf="@+id/guidelineh1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +72,7 @@
             <TextView
                 android:id="@+id/tvJudulDaftarOrder"
                 style="@style/TextContent.HeadlineMedium.Bold"
-                android:text="Daftar Makanan"
+                android:text="Data Histori Penjualan"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -37,28 +83,31 @@
                 android:layout_marginTop="8dp"
 
                 android:stretchColumns="*">
+
                 <TableRow
                     android:layout_width="0dp"
                     android:layout_height="0dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Item Menu"
                         android:gravity="center_horizontal"
+                        android:text="Payment ID"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_column="1"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:gravity="center_horizontal"
-                        android:text="Jumlah"
+                        android:text="Tanggal "
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -66,8 +115,9 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:gravity="center_horizontal"
-                        android:text="Harga Item"
+                        android:text="Total Payment"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -75,59 +125,44 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:gravity="center_horizontal"
-                        android:text="Total Harga" android:textStyle="bold" />
+                        android:text="Jenis Pembayaran"
+                        android:textStyle="bold" />
                 </TableRow>
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:text="TOTAL HARGA"
                         android:gravity="center"
-                        android:textStyle="bold"
-                        />
+                        android:text="Total Penjualan"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="32dp"
-                        android:text="0"
                         android:layout_column="3"
                         android:layout_gravity="right"
+                        android:paddingEnd="32dp"
+                        android:text="0"
                         android:textStyle="bold" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-    <ImageView
-        android:id="@+id/imgOrder"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnConfirmPayment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+
     <Button
-        android:id="@+id/btnConfirmPayment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/pembayaran_sukses"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:textSize="28sp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/button"
+        android:layout_width="127dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="32dp"
+        android:text="Hari ini"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelinev2"
+        app:layout_constraintTop_toTopOf="@+id/guidelineh1" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="740dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

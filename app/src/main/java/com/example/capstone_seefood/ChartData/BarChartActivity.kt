@@ -1,42 +1,33 @@
-package com.example.capstone_seefood
-
+package com.example.capstone_seefood.ChartData
 import android.content.Intent
-import android.graphics.Color
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.capstone_seefood.ChartData.BarChartActivityBulanan
-import com.example.capstone_seefood.ChartData.BarChartActivityMingguan
-import com.example.capstone_seefood.databinding.ActivityMainBinding
+import android.os.Bundle
+import android.graphics.Color
+import com.example.capstone_seefood.databinding.ActivityBarChartBinding
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
 
-class MainActivity : AppCompatActivity() {
-    private var _binding: ActivityMainBinding? = null
+class BarChartActivity : AppCompatActivity() {
+    private var _binding: ActivityBarChartBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityBarChartBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.apply {
             print("helo")
-            barChart?.animation!!.duration = animationDuration
-            barChart?.animate(barSet)
+            barChart.animation.duration = animationDuration
+            barChart.animate(barSet)
         }
 
-        binding.btnMingguan.setOnClickListener {
-            startActivity(Intent(this@MainActivity, BarChartActivityMingguan::class.java))
+        binding.btnMingguan?.setOnClickListener {
+            startActivity(Intent(this@BarChartActivity, BarChartActivityMingguan::class.java))
         }
-        binding.btnBulanan.setOnClickListener {
-            startActivity(Intent(this@MainActivity, BarChartActivityBulanan::class.java))
-        }
-        binding.btnPenjualan.setOnClickListener {
-            startActivity(Intent(this@MainActivity, manage_price::class.java))
-        }
-        binding.btnRiwayatTransaksi.setOnClickListener {
-            startActivity(Intent(this@MainActivity,HistoryPenjualanActivity::class.java))
+        binding.btnBulanan?.setOnClickListener {
+            startActivity(Intent(this@BarChartActivity, BarChartActivityBulanan::class.java))
         }
 
         val list:ArrayList<PieEntry> = ArrayList()
@@ -88,3 +79,43 @@ class MainActivity : AppCompatActivity() {
         private const val animationDuration = 1000L
     }
 }
+
+
+//class PieChartActivity: AppCompatActivity(){
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_bar_chart)
+//
+//        val pieChart = PieChart(findViewById(R.id.piechart))
+//
+//        val food = ArrayList<PieEntry>()
+//        food.add(PieEntry(100f, "chicken"))
+//        food.add(PieEntry(200f, "banana"))
+//        food.add(PieEntry(140f, "potato"))
+//        food.add(PieEntry(420f, "grapes"))
+//        print(food)
+//        val pieDataSet = PieDataSet(food,"makanan")
+//        //pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS)
+//        //pieDataSet.setValueTextColors(Color.RED)
+//        //pieDataSet.valueTextSize(15f)
+//
+//        val pieData = PieData(pieDataSet)
+//        pieChart.setData(pieData)
+//        //pieChart.description().setEnabled(false)
+//        //pieChart.centerText("Makanan Terjual")
+//        pieChart.animate()
+//    }
+//}
+
+//class PieChartActivity : AppCompatActivity() {
+//
+//    lateinit var pieChart:PieChart
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//
+//
+//
+//
+//
+//    }
+//}

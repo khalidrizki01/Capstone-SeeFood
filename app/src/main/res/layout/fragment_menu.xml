@@ -19,12 +19,16 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/btnMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:src="@drawable/ic_baseline_filter_list_24"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/ic_baseline_filter_list_24" />
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -35,40 +39,40 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_find_good"
+                android:text="@string/title_menu_dijual"
                 android:textColor="@color/black"
                 android:textSize="26sp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="18dp"
                 android:layout_marginTop="16dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title_food_around_you"
-                android:textColor="@color/black"
-                android:textSize="26sp"
-                android:layout_marginStart="16dp"/>
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp">
-                <com.google.android.material.chip.ChipGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:singleLine="true">
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txt_popular"
-                        app:chipBackgroundColor="@color/white"
-                        app:rippleColor="@color/color2"/>
-                    <com.google.android.material.chip.Chip
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/txt_menu"
-                        app:chipBackgroundColor="@color/white"
-                        app:rippleColor="@color/color2"/>
-                </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/title_food_around_you"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="26sp"-->
+<!--                android:layout_marginStart="16dp"/>-->
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="16dp">-->
+<!--                <com.google.android.material.chip.ChipGroup-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:singleLine="true">-->
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/txt_popular"-->
+<!--                        app:chipBackgroundColor="@color/white"-->
+<!--                        app:rippleColor="@color/color2"/>-->
+<!--                    <com.google.android.material.chip.Chip-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/txt_menu"-->
+<!--                        app:chipBackgroundColor="@color/white"-->
+<!--                        app:rippleColor="@color/color2"/>-->
+<!--                </com.google.android.material.chip.ChipGroup>-->
+<!--            </HorizontalScrollView>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,7 +93,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_edit_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -128,7 +132,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_edit_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -167,7 +171,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_edit_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -214,7 +218,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_edit_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -253,7 +257,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_edit_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -292,7 +296,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_edit_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -320,6 +324,15 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_tambahkan_menu"
+                android:textColor="@color/black"
+
+                android:textSize="26sp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -331,7 +344,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="8dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -339,7 +352,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_add_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -354,14 +367,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_telur_dadar_ceplok"
-                            android:layout_gravity="center"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/txt_price_7"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
+                            android:text="@string/txt_mie_goreng"
                             android:layout_gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -370,7 +376,7 @@
                     android:layout_height="250dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="8dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -378,7 +384,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_add_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -393,14 +399,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_sayuran"
-                            android:layout_gravity="center"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/txt_price_8"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
+                            android:text="@string/txt_mie_rebus"
                             android:layout_gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -409,7 +408,7 @@
                     android:layout_height="250dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp">
+                    android:layout_marginBottom="8dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -417,7 +416,7 @@
                         <ToggleButton
                             android:layout_width="48dp"
                             android:layout_height="48dp"
-                            android:background="@drawable/heart_selector"
+                            android:background="@drawable/ic_baseline_add_24"
                             android:checked="false"
                             android:text=""
                             android:textOff=""
@@ -432,17 +431,117 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_tempe_goreng"
+                            android:text="@string/txt_mie_dok_dok"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <ToggleButton
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/ic_baseline_add_24"
+                            android:checked="false"
+                            android:text=""
+                            android:textOff=""
+                            android:textOn=""
+                            android:layout_margin="6dp"
+                            android:layout_gravity="end"/>
+                        <ImageView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:src="@drawable/menumakan"
                             android:layout_gravity="center"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_price_9"
-                            android:textSize="14sp"
-                            android:textColor="@color/black"
+                            android:text="@string/txt_mie_goreng"
                             android:layout_gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <ToggleButton
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/ic_baseline_add_24"
+                            android:checked="false"
+                            android:text=""
+                            android:textOff=""
+                            android:textOn=""
+                            android:layout_margin="6dp"
+                            android:layout_gravity="end"/>
+                        <ImageView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:src="@drawable/menumakan"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_mie_rebus"
+                            android:layout_gravity="center"/>
+
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <ToggleButton
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/ic_baseline_add_24"
+                            android:checked="false"
+                            android:text=""
+                            android:textOff=""
+                            android:textOn=""
+                            android:layout_margin="6dp"
+                            android:layout_gravity="end"/>
+                        <ImageView
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:src="@drawable/menumakan"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_mie_dok_dok"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
 
             <ScrollView
