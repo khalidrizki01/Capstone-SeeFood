@@ -8,14 +8,13 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.room.Room
 import com.example.capstone_seefood.databinding.ActivityConfirmPaymentBinding
 import com.example.capstone_seefood.db.Food
 import com.example.capstone_seefood.db.FoodDatabase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ConfirmPaymentActivity : AppCompatActivity(), View.OnClickListener {
+abstract class ConfirmPaymentActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityConfirmPaymentBinding
     private lateinit var btnConfirmPayment : Button
 //    lateinit var db : FoodDatabase
@@ -55,6 +54,10 @@ class ConfirmPaymentActivity : AppCompatActivity(), View.OnClickListener {
 //        binding.btnConfirmPayment.setOnClickListener(this)
         }
 
+    }
+
+    private fun goToReceiptActivity() {
+        TODO("Not yet implemented")
     }
 
 
