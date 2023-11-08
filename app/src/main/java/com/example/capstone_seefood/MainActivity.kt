@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity() {
 
         val pieData= PieData(pieDataSet)
 
+
+        print("hello")
         binding.pieChart!!.data= pieData
 
         binding.pieChart!!.description.text= "Pie Chart"
