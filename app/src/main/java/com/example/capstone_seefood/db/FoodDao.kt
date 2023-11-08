@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.capstone_seefood.db.relations.FoodSum
 import com.example.capstone_seefood.db.relations.FoodWithReceipts
 //import com.example.capstone_seefood.db.relations.FoodWithReceipts
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
@@ -45,6 +46,15 @@ interface FoodDao {
 //  Untuk mengambil data makanan yang tidak dijual
     @Query("SELECT * FROM food WHERE issell == 0")
     fun getUnavailableFood(): List<Food>
+
+    @Transaction
+    @Query("SELECT foodId, SUM(totalItemPrice) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
+    fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
+
+    @Transaction
+    @Query("SELECT foodId, SUM(quantity) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
+    suspend fun getQuantityPerFoodId(startDate: LocalDateTime): List<FoodSum>
+
 
     @Query("SELECT * FROM food WHERE name == :foodName LIMIT 1")
     fun getFoodBasedOnName(foodName : String) : Food
