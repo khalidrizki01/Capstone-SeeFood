@@ -8,19 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.capstone_seefood.ChartData.BarChartActivityBulanan
 import com.example.capstone_seefood.ChartData.BarChartActivityMingguan
 import com.example.capstone_seefood.databinding.ActivityMainBinding
-import com.example.capstone_seefood.db.FoodDao
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.utils.ColorTemplate
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private lateinit var foodDao : FoodDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,20 +120,4 @@ class MainActivity : AppCompatActivity() {
 
         private const val animationDuration = 1000L
     }
-
-    private fun getSalesThisMonth(){
-        val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
-        foodDao.getTotalItemPricePerFoodId(startOfMonth)
-    }
-
-    private fun getSalesThisWeek() {
-        val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).atStartOfDay()
-        foodDao.getTotalItemPricePerFoodId(startOfWeek)
-    }
-
-    private fun getSalesThisYear() {
-        val startOfYear = LocalDate.now().withDayOfYear(1).atStartOfDay()
-        foodDao.getTotalItemPricePerFoodId(startOfYear)
-    }
-
 }
