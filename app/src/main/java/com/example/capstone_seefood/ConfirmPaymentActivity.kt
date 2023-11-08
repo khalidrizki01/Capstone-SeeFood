@@ -10,6 +10,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import com.example.capstone_seefood.databinding.ActivityConfirmPaymentBinding
 import com.example.capstone_seefood.db.Food
+import com.example.capstone_seefood.db.FoodDao
 import com.example.capstone_seefood.db.FoodDatabase
 import com.example.capstone_seefood.db.Receipt
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
@@ -21,10 +22,10 @@ import java.util.UUID
 class ConfirmPaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfirmPaymentBinding
     private lateinit var foods : List<Food>
-    private lateinit var receipts : List<Receipt>
-    private lateinit var receiptFoodRelations : List<ReceiptFoodCrossRef>
-    private lateinit var receipt1Id : UUID
-    private lateinit var receipt2Id: UUID
+    private lateinit var identifiedFoods : List<String>
+    private lateinit var foodQuantities : List<Int>
+    private lateinit var foodDao : FoodDao
+
 //    private lateinit var btnConfirmPayment : Button
 
 
@@ -36,7 +37,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val foodDao = FoodDatabase.getInstance(this).foodDao
+        foodDao = FoodDatabase.getInstance(this).foodDao
         binding = ActivityConfirmPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -59,10 +60,13 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 //        }
         initData()
         GlobalScope.launch {
-            foods.forEach { foodDao.insertFood(it) }
-            receipts.forEach { foodDao.insertReceipt(it) }
-            receiptFoodRelations.forEach { foodDao.insertReceiptFoodCrossRef(it) }
-            val receiptWithFoods = foodDao.getReceiptWithFoods(receipt1Id)
+            foodDao.deleteAllFood()
+            foodDao.deleteAllReceipts()
+            foodDao.deleteAllReceiptFoodCR()
+            storeReceipt()
+//            receipts.forEach { foodDao.insertReceipt(it) }
+//            receiptFoodRelations.forEach { foodDao.insertReceiptFoodCrossRef(it) }
+//            val receiptWithFoods = foodDao.getReceiptWithFoods(receipt1Id)
         }
     }
 
@@ -70,25 +74,33 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         val food1Id = UUID.randomUUID()
         val food2Id = UUID.randomUUID()
         val food3Id = UUID.randomUUID()
-
-        receipt1Id = UUID.randomUUID()
-        receipt2Id = UUID.randomUUID()
         foods = listOf(
-            Food(food1Id, "Nasi Goreng", 12000, 1, true),
-            Food(food2Id, "Mie Goreng", 7000, 2, true),
-            Food(food3Id, "Telur", 5000, 3, true)
+            Food(food1Id, "Nasi Goreng", 1, 12000, true),
+            Food(food2Id, "Mie Goreng", 2, 7000, true),
+            Food(food3Id, "Telur", 3, 5000, true)
         )
+    }
 
-        receipts = listOf(
-            Receipt(receipt1Id, 27000, 29700),
-            Receipt(receipt2Id, 27000, 29700, createdAt = LocalDateTime.parse("2023-11-01T07:33:36"))
-        )
-        receiptFoodRelations = listOf(
-            ReceiptFoodCrossRef(receipt1Id, food1Id, 2, 24000),
-            ReceiptFoodCrossRef(receipt1Id, food3Id, 1, 14000),
-            ReceiptFoodCrossRef(receipt2Id, food2Id, 1, 12000),
-            ReceiptFoodCrossRef(receipt2Id, food3Id, 3, 15000)
-        )
+    private fun storeReceipt() {
+        foods.forEach { foodDao.insertFood(it) }
+
+        identifiedFoods = listOf("Nasi Goreng", "Telur")
+        foodQuantities = listOf(1, 2)
+
+        var recId : UUID = UUID.randomUUID()
+        var totalPrice : Int = 0
+        for((index, identifiedFood) in identifiedFoods.withIndex()) {
+            var oneFood = foodDao.getFoodBasedOnName(identifiedFood)
+            if(oneFood.isSell) {
+                var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, foodQuantities[index])
+                totalPrice += receiptFood.calculateTotalItemPrice(oneFood.price!!)
+                foodDao.insertReceiptFoodCrossRef(receiptFood)
+            } else {
+                continue
+            }
+        }
+        var newReceipt = Receipt(recId, totalPrice)
+        foodDao.insertReceipt(newReceipt)
     }
 
     private fun goToReceiptActivity() {
