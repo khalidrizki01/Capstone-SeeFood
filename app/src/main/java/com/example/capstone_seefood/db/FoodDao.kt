@@ -48,14 +48,28 @@ interface FoodDao {
     fun getUnavailableFood(): List<Food>
 
     @Transaction
-    @Query("SELECT foodId, SUM(totalItemPrice) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
+//    @Query("SELECT foodId, SUM(totalItemPrice) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
+    @Query("""
+        SELECT f.name, SUM(rf.totalItemPrice) as sum
+        FROM ReceiptFoodCrossRef rf
+        INNER JOIN Food f ON rf.foodId = f.foodId
+        WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate)
+        GROUP BY rf.foodId
+    """)
     fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
 
     @Transaction
-    @Query("SELECT foodId, SUM(quantity) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
-    suspend fun getQuantityPerFoodId(startDate: LocalDateTime): List<FoodSum>
+//    @Query("SELECT foodId, SUM(quantity) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
+    @Query("""
+        SELECT rf.foodId, f.name, SUM(rf.quantity) as sum
+        FROM ReceiptFoodCrossRef rf
+        INNER JOIN Food f ON rf.foodId = f.foodId
+        WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate)
+        GROUP BY rf.foodId
+    """)
+    fun getQuantityPerFoodId(startDate: LocalDateTime): List<FoodSum>
 
-
+    @Transaction
     @Query("SELECT * FROM food WHERE name == :foodName LIMIT 1")
     fun getFoodBasedOnName(foodName : String) : Food
 
