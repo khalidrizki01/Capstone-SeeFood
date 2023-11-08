@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private lateinit var foodDao : FoodDao
+    private lateinit var foodDao: FoodDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,54 +43,55 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, manage_price::class.java))
         }
         binding.btnRiwayatTransaksi.setOnClickListener {
-            startActivity(Intent(this@MainActivity,HistoryPenjualanActivity::class.java))
+            startActivity(Intent(this@MainActivity, HistoryPenjualanActivity::class.java))
         }
         binding.btnModeScan.setOnClickListener {
-            startActivity(Intent(this@MainActivity,ScanActivity::class.java))
+            startActivity(Intent(this@MainActivity, ScanActivity::class.java))
         }
 
         binding.tvFavoriteMenu?.text = "FETCH NAMA MAKANAN PALING LARIS"
         binding.tvTotalRevenue?.text = "FETCH Total PENDAPAT"
-        val list:ArrayList<PieEntry> = ArrayList()
+        val list: ArrayList<PieEntry> = ArrayList()
 
-        list.add(PieEntry(100f,"100"))
-        list.add(PieEntry(101f,"101"))
-        list.add(PieEntry(102f,"102"))
-        list.add(PieEntry(103f,"103"))
-        list.add(PieEntry(104f,"104"))
+        list.add(PieEntry(100f, "100"))
+        list.add(PieEntry(101f, "101"))
+        list.add(PieEntry(102f, "102"))
+        list.add(PieEntry(103f, "103"))
+        list.add(PieEntry(104f, "104"))
 
-        val pieDataSet= PieDataSet(list,"List")
+        val pieDataSet = PieDataSet(list, "List")
 
-        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
-        pieDataSet.valueTextColor= Color.BLACK
-        pieDataSet.valueTextSize=15f
+        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS, 255)
+        pieDataSet.valueTextColor = Color.BLACK
+        pieDataSet.valueTextSize = 15f
 
-        val pieData= PieData(pieDataSet)
+        val pieData = PieData(pieDataSet)
 
 
 
-        binding.pieChart!!.data= pieData
+        binding.pieChart!!.data = pieData
 
-        binding.pieChart!!.description.text= "Pie Chart"
+        binding.pieChart!!.description.text = "Pie Chart"
 
-        binding.pieChart!!.centerText="List"
+        binding.pieChart!!.centerText = "List"
 
         binding.pieChart!!.animateY(2000)
         //add
     }
-    fun getPermission(){
+
+    fun getPermission() {
         var hwaccess = mutableListOf<String>()
 
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.CAMERA)
         }
-        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
         }
-        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (hwaccess.size>0) {
+        if (hwaccess.size > 0) {
             requestPermissions(hwaccess.toTypedArray(), 101)
         }
     }
@@ -101,12 +102,13 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        grantResults.forEach{
-            if(it != PackageManager.PERMISSION_GRANTED){
+        grantResults.forEach {
+            if (it != PackageManager.PERMISSION_GRANTED) {
                 getPermission()
             }
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -114,8 +116,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
 
-        var totaljual = arrayOf(4,7,2,3,5,4)
-        var dictionary = arrayOf("0f","0f","0f","0f","0f")
+        var totaljual = arrayOf(4, 7, 2, 3, 5, 4)
+        var dictionary = arrayOf("0f", "0f", "0f", "0f", "0f")
         private val barSet = listOf(
             "Ayam Guling Kukus \n (Terjual : ${totaljual[0]})" to 2F,
             "Babi Panggang " to 7F,
@@ -131,11 +133,12 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun getSalesThisDay(){
+    private fun getSalesThisDay() {
         val startOfDay = LocalDate.now().atStartOfDay()
         foodDao.getTotalItemPricePerFoodId(startOfDay)
     }
-    private fun getSalesThisMonth(){
+
+    private fun getSalesThisMonth() {
         val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
         foodDao.getTotalItemPricePerFoodId(startOfMonth)
     }
@@ -149,3 +152,4 @@ class MainActivity : AppCompatActivity() {
         val startOfYear = LocalDate.now().withDayOfYear(1).atStartOfDay()
         foodDao.getTotalItemPricePerFoodId(startOfYear)
     }
+}
