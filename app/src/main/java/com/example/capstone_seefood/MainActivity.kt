@@ -1,6 +1,7 @@
 package com.example.capstone_seefood
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
             barChart?.animation!!.duration = animationDuration
             barChart?.animate(barSet)
         }
+        getPermission()
 
         binding.btnMingguan.setOnClickListener {
             startActivity(Intent(this@MainActivity, BarChartActivityMingguan::class.java))
@@ -42,6 +44,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnRiwayatTransaksi.setOnClickListener {
             startActivity(Intent(this@MainActivity,HistoryPenjualanActivity::class.java))
+        }
+        binding.btnModeScan.setOnClickListener {
+            startActivity(Intent(this@MainActivity,ScanActivity::class.java))
         }
 
         val list:ArrayList<PieEntry> = ArrayList()
@@ -69,7 +74,35 @@ class MainActivity : AppCompatActivity() {
         binding.pieChart!!.animateY(2000)
         //add
     }
+    fun getPermission(){
+        var hwaccess = mutableListOf<String>()
 
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            hwaccess.add(android.Manifest.permission.CAMERA)
+        }
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (hwaccess.size>0) {
+            requestPermissions(hwaccess.toTypedArray(), 101)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        grantResults.forEach{
+            if(it != PackageManager.PERMISSION_GRANTED){
+                getPermission()
+            }
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

@@ -1,4 +1,5 @@
 package com.example.capstone_seefood
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -47,6 +48,9 @@ class HistoryPenjualanActivity: AppCompatActivity() {
             count++
         }
 
+        binding.btnbackhome.setOnClickListener {
+            startActivity(Intent(this@HistoryPenjualanActivity,MainActivity::class.java))
+        }
 
 //        binding.btnConfirmPayment.setOnClickListener(this)
     }
