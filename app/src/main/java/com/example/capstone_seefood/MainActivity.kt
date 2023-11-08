@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private lateinit var foodDao : FoodDao
     private lateinit var barSet : List<Pair<String, Float>>
+    private lateinit var foodDao: FoodDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,11 +91,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, manage_price::class.java))
         }
         binding.btnRiwayatTransaksi.setOnClickListener {
-            startActivity(Intent(this@MainActivity,HistoryPenjualanActivity::class.java))
+            startActivity(Intent(this@MainActivity, HistoryPenjualanActivity::class.java))
         }
         binding.btnModeScan.setOnClickListener {
-            startActivity(Intent(this@MainActivity,ScanActivity::class.java))
+            startActivity(Intent(this@MainActivity, ScanActivity::class.java))
         }
+
 
 //        val list:ArrayList<PieEntry> = ArrayList()
 //
@@ -119,21 +121,20 @@ class MainActivity : AppCompatActivity() {
 //        binding.pieChart!!.centerText="List"
 //
 //        binding.pieChart!!.animateY(2000)
-        //add
-    }
-    fun getPermission(){
+
+    fun getPermission() {
         var hwaccess = mutableListOf<String>()
 
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.CAMERA)
         }
-        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
         }
-        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (hwaccess.size>0) {
+        if (hwaccess.size > 0) {
             requestPermissions(hwaccess.toTypedArray(), 101)
         }
     }
@@ -144,19 +145,19 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        grantResults.forEach{
-            if(it != PackageManager.PERMISSION_GRANTED){
+        grantResults.forEach {
+            if (it != PackageManager.PERMISSION_GRANTED) {
                 getPermission()
             }
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
 
     companion object {
-
 //        var totaljual = arrayOf(4,7,2,3,5,4)
 //        var dictionary = arrayOf("0f","0f","0f","0f","0f")
 //        private val barSet = listOf(
@@ -232,5 +233,4 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
 }

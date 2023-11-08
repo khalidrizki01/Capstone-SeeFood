@@ -52,6 +52,6 @@ class HistoryPenjualanActivity: AppCompatActivity() {
             startActivity(Intent(this@HistoryPenjualanActivity,MainActivity::class.java))
         }
 
-//        binding.btnConfirmPayment.setOnClickListener(this)
+
     }
 }
