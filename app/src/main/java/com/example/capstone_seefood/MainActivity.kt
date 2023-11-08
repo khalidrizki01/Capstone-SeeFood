@@ -70,13 +70,20 @@ class MainActivity : AppCompatActivity() {
         //add
     }
     fun getPermission(){
-        var permissionlst = mutableListOf<String>()
+        var hwaccess = mutableListOf<String>()
 
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-            permissionlst.add(android.Manifest.permission.CAMERA)
-
-        if (permissionlst.size>0)
-            requestPermissions(permissionlst.toTypedArray(),101)
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            hwaccess.add(android.Manifest.permission.CAMERA)
+        }
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (hwaccess.size>0) {
+            requestPermissions(hwaccess.toTypedArray(), 101)
+        }
     }
 
     override fun onRequestPermissionsResult(
