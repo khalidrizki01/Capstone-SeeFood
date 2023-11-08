@@ -27,6 +27,16 @@
         app:layout_constraintStart_toStartOf="@+id/guidelinev2"
         app:layout_constraintTop_toBottomOf="@+id/btnHistoryMinggu" />
 
+    <Button
+        android:id="@+id/btnbackhome"
+        android:layout_width="127dp"
+        android:layout_height="91dp"
+        android:text="Menu Utama"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelinev2"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistoryBulan" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelinev2"
         android:layout_width="wrap_content"

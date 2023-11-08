@@ -71,7 +71,8 @@
                 style="@style/TextContent.HeadlineMedium"
                 android:text="Ringkasan Orderan"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TableLayout
                 android:id="@+id/tbOrder"
                 android:layout_width="match_parent"
@@ -79,17 +80,19 @@
                 android:layout_marginTop="8dp"
 
                 android:stretchColumns="*">
+
                 <TableRow
                     android:layout_width="0dp"
                     android:layout_height="0dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="Item Menu"
                         android:gravity="center_horizontal"
+                        android:text="Item Menu"
                         android:textStyle="bold" />
 
                     <TextView
@@ -101,6 +104,7 @@
                         android:gravity="center_horizontal"
                         android:text="Jumlah"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -110,6 +114,7 @@
                         android:gravity="center_horizontal"
                         android:text="Harga Item"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -120,61 +125,70 @@
                         android:text="Total Harga"
                         android:textStyle="bold" />
                 </TableRow>
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
+                        android:gravity="center"
                         android:text="Total Harga Makanan"
-                        android:gravity="center"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="32dp"
-                        android:text="0"
                         android:layout_column="3"
                         android:layout_gravity="right"
+                        android:paddingEnd="32dp"
+                        android:text="0"
                         android:textStyle="bold" />
                 </TableRow>
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
+                        android:gravity="center"
                         android:text="Pembayaran"
-                        android:gravity="center"
                         android:textStyle="normal" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="32dp"
-                        android:text="0"
                         android:layout_column="3"
                         android:layout_gravity="right"
+                        android:paddingEnd="32dp"
+                        android:text="0"
                         android:textStyle="bold" />
                 </TableRow>
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:text="Kembalian"
                         android:gravity="center"
+                        android:text="Kembalian"
                         android:textStyle="normal" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="32dp"
-                        android:text="0"
                         android:layout_column="3"
                         android:layout_gravity="right"
+                        android:paddingEnd="32dp"
+                        android:text="0"
                         android:textStyle="bold" />
                 </TableRow>
             </TableLayout>
