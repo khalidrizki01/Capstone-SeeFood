@@ -1,19 +1,22 @@
 package com.example.capstone_seefood.db
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.util.UUID
 
-@Entity
+@Entity(indices = [Index(value = ["name"],
+    unique = true)])
 @Parcelize
 data class Food(
     @PrimaryKey //(autoGenerate = true)
-    val foodId : UUID,
+    val foodId : Int,
     val name : String,
+    val photo : String,
     val price : Int? = null,
-    val photo : Int,
     val isSell : Boolean = false
 ) : Parcelable

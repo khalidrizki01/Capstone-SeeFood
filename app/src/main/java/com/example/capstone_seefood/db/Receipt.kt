@@ -15,6 +15,7 @@ data class Receipt(
     @PrimaryKey //(autoGenerate = true)
     val receiptId : UUID,
     val totalPrice: Int,
-    val totalTaxedPrice: Int,
     val createdAt: LocalDateTime = LocalDateTime.now()
-) : Parcelable
+) : Parcelable {
+    var totalTaxedPrice: Int = (totalPrice * 1.1).toInt()
+}

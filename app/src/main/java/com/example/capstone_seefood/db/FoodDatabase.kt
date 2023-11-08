@@ -13,9 +13,9 @@ import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
         Receipt::class,
         ReceiptFoodCrossRef::class
     ],
-    version=2
+    version=1
 )
-@TypeConverters(LocalDateTimeConverter::class)
+@TypeConverters(Converter::class)
 abstract class FoodDatabase : RoomDatabase() {
     abstract val foodDao : FoodDao
 
@@ -28,7 +28,8 @@ abstract class FoodDatabase : RoomDatabase() {
                 return INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     FoodDatabase::class.java,
-                    "food-db"
+                    "seefood-db"
+                ).createFromAsset("database/seefood.db"
                 ).fallbackToDestructiveMigration().build().also{
                     INSTANCE = it
                 }
