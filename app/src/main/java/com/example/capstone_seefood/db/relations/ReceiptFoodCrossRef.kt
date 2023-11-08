@@ -9,7 +9,7 @@ import java.util.UUID
 @Entity(primaryKeys = ["receiptId", "foodId"])
 data class ReceiptFoodCrossRef(
     val receiptId: UUID,
-    val foodId: UUID,
+    val foodId: Int,
     val quantity: Int,
 ) : Parcelable {
     var totalItemPrice : Int? = null

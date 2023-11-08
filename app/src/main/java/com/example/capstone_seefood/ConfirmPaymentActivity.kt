@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
@@ -63,15 +64,16 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 //        binding.btnConfirmPayment.setOnClickListener {
 //            goToReceiptActivity()
 //        }
-        initData()
+//        initData()
         GlobalScope.launch {
-            foodDao.deleteAllFood()
-            foodDao.deleteAllReceipts()
-            foodDao.deleteAllReceiptFoodCR()
-            foods.forEach{foodDao.insertFood(it)}
-            val foodInDB = foodDao.getFoodBasedOnName("Ayam Goreng")
+//            foodDao.deleteAllFood()
+//            foodDao.deleteAllReceipts()
+//            foodDao.deleteAllReceiptFoodCR()
+//            foods.forEach{foodDao.insertFood(it)}
+            val foodInDB = foodDao.getFoodBasedOnName("Nasi")
+            val ayamid = resources.getIdentifier(foodInDB.photo, "drawable", packageName)
             GlobalScope.launch(Dispatchers.Main) {
-                binding.imgOrder.setImageBitmap(foodInDB.photo)
+                binding.imgOrder.setImageResource(ayamid)
             }
 //            storeReceipt()
 //            receipts.forEach { foodDao.insertReceipt(it) }
@@ -91,6 +93,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 //        val nasiid = resources.getIdentifier("nasi", "drawable", packageName)
 //        val sambalid = resources.getIdentifier("sambal", "drawable", packageName
         val ayamid = resources.getIdentifier("ayamgoreng", "drawable", packageName)
+        Log.d("DB", "${ayamid.toString()}")
 //        val ayamGoreng = resources.getDrawable(R.drawable.ayamgoreng)
         val bitmap = BitmapFactory.decodeResource(resources, ayamid)
 
@@ -103,8 +106,10 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         val food1Id = UUID.randomUUID()
         val food2Id = UUID.randomUUID()
         val food3Id = UUID.randomUUID()
+        Log.d("DB", food1Id.toString())
+        Log.d("DB", food2Id.toString())
         foods = listOf(
-            Food(food1Id, "Ayam Goreng", bitmap, 12000, true),
+            Food(1, "Ayam Goreng", "ayamgoreng", 12000, true),
 //            Food(food2Id, "Nasi", 2, 7000, true),
 //            Food(food3Id, "Sambal", 3),
         )
