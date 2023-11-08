@@ -13,9 +13,9 @@ import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
         Receipt::class,
         ReceiptFoodCrossRef::class
     ],
-    version=1
+    version=2
 )
-@TypeConverters(LocalDateTimeConverter::class)
+@TypeConverters(Converter::class)
 abstract class FoodDatabase : RoomDatabase() {
     abstract val foodDao : FoodDao
 

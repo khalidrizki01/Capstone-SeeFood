@@ -1,5 +1,8 @@
 package com.example.capstone_seefood
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -8,12 +11,14 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+//import coil.ImageLoader
 import com.example.capstone_seefood.databinding.ActivityConfirmPaymentBinding
 import com.example.capstone_seefood.db.Food
 import com.example.capstone_seefood.db.FoodDao
 import com.example.capstone_seefood.db.FoodDatabase
 import com.example.capstone_seefood.db.Receipt
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -63,21 +68,45 @@ class ConfirmPaymentActivity : AppCompatActivity() {
             foodDao.deleteAllFood()
             foodDao.deleteAllReceipts()
             foodDao.deleteAllReceiptFoodCR()
-            storeReceipt()
+            foods.forEach{foodDao.insertFood(it)}
+            val foodInDB = foodDao.getFoodBasedOnName("Ayam Goreng")
+            GlobalScope.launch(Dispatchers.Main) {
+                binding.imgOrder.setImageBitmap(foodInDB.photo)
+            }
+//            storeReceipt()
 //            receipts.forEach { foodDao.insertReceipt(it) }
 //            receiptFoodRelations.forEach { foodDao.insertReceiptFoodCrossRef(it) }
 //            val receiptWithFoods = foodDao.getReceiptWithFoods(receipt1Id)
         }
     }
 
+
+
     private fun initData() {
+//        val listImage = listOf("ayamgoreng", "nasi", "sambal", "tahu", "tempe")
+//        val listHarga = listOf(9000, 3000, 0, 1000, 700)
+//        listImage.forEach()
+//        val ayam = resources.getIdentifier("ayamgoreng", "drawable", packageName )
+//        val ayamid = resources.getIdentifier("ayamgoreng", "drawable", packageName)
+//        val nasiid = resources.getIdentifier("nasi", "drawable", packageName)
+//        val sambalid = resources.getIdentifier("sambal", "drawable", packageName
+        val ayamid = resources.getIdentifier("ayamgoreng", "drawable", packageName)
+//        val ayamGoreng = resources.getDrawable(R.drawable.ayamgoreng)
+        val bitmap = BitmapFactory.decodeResource(resources, ayamid)
+
+//        val ayamGorengByteArray = ayamGoreng.toBy
+
+//        val drawayam = resources.getDrawable(ayamid, null)
+//        val drawnasi = resources.getDrawable(nasiid, null)
+//        val drawasambal = resources.getDrawable(sambalid, null)
+
         val food1Id = UUID.randomUUID()
         val food2Id = UUID.randomUUID()
         val food3Id = UUID.randomUUID()
         foods = listOf(
-            Food(food1Id, "Nasi Goreng", 1, 12000, true),
-            Food(food2Id, "Mie Goreng", 2, 7000, true),
-            Food(food3Id, "Telur", 3, 5000, true)
+            Food(food1Id, "Ayam Goreng", bitmap, 12000, true),
+//            Food(food2Id, "Nasi", 2, 7000, true),
+//            Food(food3Id, "Sambal", 3),
         )
     }
 

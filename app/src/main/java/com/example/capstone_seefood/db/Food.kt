@@ -1,5 +1,6 @@
 package com.example.capstone_seefood.db
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -15,7 +16,7 @@ data class Food(
     @PrimaryKey //(autoGenerate = true)
     val foodId : UUID,
     val name : String,
-    val photo : Int,
+    val photo : Bitmap,
     val price : Int? = null,
     val isSell : Boolean = false
 ) : Parcelable

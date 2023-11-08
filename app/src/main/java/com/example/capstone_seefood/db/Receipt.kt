@@ -17,5 +17,5 @@ data class Receipt(
     val totalPrice: Int,
     val createdAt: LocalDateTime = LocalDateTime.now()
 ) : Parcelable {
-    val totalTaxedPrice: Int = (totalPrice * 1.1).toInt()
+    var totalTaxedPrice: Int = (totalPrice * 1.1).toInt()
 }
