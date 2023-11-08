@@ -49,6 +49,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity,ScanActivity::class.java))
         }
 
+        binding.tvFavoriteMenu?.text = "FETCH NAMA MAKANAN PALING LARIS"
+        binding.tvTotalRevenue?.text = "FETCH Total PENDAPAT"
         val list:ArrayList<PieEntry> = ArrayList()
 
         list.add(PieEntry(100f,"100"))
