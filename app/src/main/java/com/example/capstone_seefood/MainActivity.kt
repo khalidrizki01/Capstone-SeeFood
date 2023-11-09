@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//        getPermission()
+        getPermission()
 
         binding.btnPenjualan.setOnClickListener {
             startActivity(Intent(this@MainActivity, manage_price::class.java))
@@ -221,8 +221,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 val dates = listOf(
-                    LocalDate.parse("2023-11-06").atStartOfDay(),
-                    LocalDate.parse("2023-11-01").atStartOfDay()
+                    LocalDate.parse("2023-11-07").atStartOfDay(),
+                    LocalDate.parse("2023-11-02").atStartOfDay()
                 )
                 var newReceipt: Receipt
                 if (i >= 3) {
