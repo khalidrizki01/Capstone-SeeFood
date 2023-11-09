@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                 updateCharts()
 //            startActivity(Intent(this@MainActivity, BarChartActivityBulanan::class.java))
                 Log.d("CHART", "VISUALISASI MONTHLY")
+
             }
         }
 
@@ -81,41 +82,41 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, ScanActivity::class.java))
         }
     }
-    fun getPermission(){
+  
+        fun getPermission() {
+            var hwaccess = mutableListOf<String>()
 
-        var hwaccess = mutableListOf<String>()
-
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            hwaccess.add(android.Manifest.permission.CAMERA)
-        }
-        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
-        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
-        if (hwaccess.size > 0) {
-            requestPermissions(hwaccess.toTypedArray(), 101)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        grantResults.forEach {
-            if (it != PackageManager.PERMISSION_GRANTED) {
-                getPermission()
+            if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                hwaccess.add(android.Manifest.permission.CAMERA)
+            }
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+            if (hwaccess.size > 0) {
+                requestPermissions(hwaccess.toTypedArray(), 101)
             }
         }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
+        override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+        ) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            grantResults.forEach {
+                if (it != PackageManager.PERMISSION_GRANTED) {
+                    getPermission()
+                }
+            }
+        }
+
+        override fun onDestroy() {
+            super.onDestroy()
+            _binding = null
+        }
 
     private fun updateCharts() {
 //        GlobalScope.launch {
@@ -155,33 +156,33 @@ class MainActivity : AppCompatActivity() {
             binding.tvTotalRevenue?.text = "Rp${String.format("%,d", mostIncome)}"
 //        }
 
+        private fun getSalesToday(): List<FoodSum> {
+            val today = LocalDate.now().atStartOfDay()
+            return foodDao.getTotalItemPricePerFoodId(today)
+        }
 
-    private fun getSalesToday() : List<FoodSum>{
-        val today = LocalDate.now().atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(today)
-    }
-    private fun getSalesThisMonth() : List<FoodSum>{
-        val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(startOfMonth)
-    }
+        private fun getSalesThisMonth(): List<FoodSum> {
+            val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
+            return foodDao.getTotalItemPricePerFoodId(startOfMonth)
+        }
 
-    private fun getSalesThisWeek() : List<FoodSum> {
-        val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(startOfWeek)
-    }
+        private fun getSalesThisWeek(): List<FoodSum> {
+            val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).atStartOfDay()
+            return foodDao.getTotalItemPricePerFoodId(startOfWeek)
+        }
 
-    private fun getSalesThisYear() : List<FoodSum>{
-        val startOfYear = LocalDate.now().withDayOfYear(1).atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(startOfYear)
-    }
+        private fun getSalesThisYear(): List<FoodSum> {
+            val startOfYear = LocalDate.now().withDayOfYear(1).atStartOfDay()
+            return foodDao.getTotalItemPricePerFoodId(startOfYear)
+        }
 
-    fun getTopSoldFoodName(listSale: List<FoodSum>): Pair<String, Int> {
-        // Temukan food dengan sum terbanyak
-        val topSoldFood = listSale.maxBy { it.sum }
+        fun getTopSoldFoodName(listSale: List<FoodSum>): Pair<String, Int> {
+            // Temukan food dengan sum terbanyak
+            val topSoldFood = listSale.maxBy { it.sum }
 
-        // Kembalikan name dari food tersebut
-        return Pair(topSoldFood?.name ?: "", topSoldFood?.sum ?: 0)
-    }
+            // Kembalikan name dari food tersebut
+            return Pair(topSoldFood?.name ?: "", topSoldFood?.sum ?: 0)
+        }
 
 //    Inisialisasi data sales
     private fun storeReceipt() {
@@ -201,13 +202,15 @@ class MainActivity : AppCompatActivity() {
                 listOf(50, 1),
                 listOf(1, 40)
             )
-            for((i, receipt) in listOfReceipt.withIndex()){
-                for((index, identifiedFood) in receipt.withIndex()) {
+           
+            for ((i, receipt) in listOfReceipt.withIndex()) {
+                for ((index, identifiedFood) in receipt.withIndex()) {
                     var foodQty = receiptFoodQuantities[i]
-                    var recId : UUID = UUID.randomUUID()
-                    var totalPrice : Int = 0
+                    var recId: UUID = UUID.randomUUID()
+                    var totalPrice: Int = 0
                     var oneFood = foodDao.getFoodBasedOnName(identifiedFood)
-                    if(oneFood.isSell) {
+                    if (oneFood.isSell) {
+
                         var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, foodQty[index])
                         totalPrice += receiptFood.calculateTotalItemPrice(oneFood.price!!)
                         foodDao.insertReceiptFoodCrossRef(receiptFood)
@@ -226,5 +229,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 //        }
+
+
+        }
     }
-}
+
