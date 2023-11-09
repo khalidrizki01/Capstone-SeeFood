@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
             val (favoritMenu, mostIncome) = getTopSoldFoodName(listFoodSum)
             binding.tvFavoriteMenu?.text = favoritMenu
             binding.tvTotalRevenue?.text = "Rp${String.format("%,d", mostIncome)}"
-//        }
+        }
 
         private fun getSalesToday(): List<FoodSum> {
             val today = LocalDate.now().atStartOfDay()
@@ -186,7 +186,6 @@ class MainActivity : AppCompatActivity() {
 
 //    Inisialisasi data sales
     private fun storeReceipt() {
-    //        foods.forEach { foodDao.insertFood(it) }
 //        GlobalScope.launch {
             val listOfReceipt = listOf(
                 listOf("Nasi", "Ayam Goreng", "Tahu"),
