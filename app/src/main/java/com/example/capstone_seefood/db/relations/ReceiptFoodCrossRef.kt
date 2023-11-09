@@ -10,6 +10,8 @@ import java.util.UUID
 data class ReceiptFoodCrossRef(
     val receiptId: UUID,
     val foodId: Int,
+    val foodName : String,
+    val foodPrice : Int?,
     val quantity: Int,
 ) : Parcelable {
     var totalItemPrice : Int? = null
