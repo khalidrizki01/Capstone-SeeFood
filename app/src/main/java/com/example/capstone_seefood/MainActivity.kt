@@ -75,25 +75,26 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, manage_price::class.java))
         }
         binding.btnRiwayatTransaksi.setOnClickListener {
-            startActivity(Intent(this@MainActivity,HistoryPenjualanActivity::class.java))
+            startActivity(Intent(this@MainActivity, HistoryPenjualanActivity::class.java))
         }
         binding.btnModeScan.setOnClickListener {
-            startActivity(Intent(this@MainActivity,ScanActivity::class.java))
+            startActivity(Intent(this@MainActivity, ScanActivity::class.java))
         }
     }
     fun getPermission(){
+
         var hwaccess = mutableListOf<String>()
 
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.CAMERA)
         }
-        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
         }
-        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        if (hwaccess.size>0) {
+        if (hwaccess.size > 0) {
             requestPermissions(hwaccess.toTypedArray(), 101)
         }
     }
@@ -104,12 +105,13 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        grantResults.forEach{
-            if(it != PackageManager.PERMISSION_GRANTED){
+        grantResults.forEach {
+            if (it != PackageManager.PERMISSION_GRANTED) {
                 getPermission()
             }
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
@@ -152,7 +154,7 @@ class MainActivity : AppCompatActivity() {
             binding.tvFavoriteMenu?.text = favoritMenu
             binding.tvTotalRevenue?.text = "Rp${String.format("%,d", mostIncome)}"
 //        }
-    }
+
 
     private fun getSalesToday() : List<FoodSum>{
         val today = LocalDate.now().atStartOfDay()
@@ -225,5 +227,4 @@ class MainActivity : AppCompatActivity() {
             }
 //        }
     }
-
 }
