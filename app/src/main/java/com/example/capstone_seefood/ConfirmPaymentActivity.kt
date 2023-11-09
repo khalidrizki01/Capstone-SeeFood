@@ -105,7 +105,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         )
     }
 
-    private fun storeReceipt() {
+    private suspend fun storeReceipt() {
 //        foods.forEach { foodDao.insertFood(it) }
 
         identifiedFoods = listOf("Nasi")
@@ -116,7 +116,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         for((index, identifiedFood) in identifiedFoods.withIndex()) {
             var oneFood = foodDao.getFoodBasedOnName(identifiedFood)
             if(oneFood.isSell) {
-                var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, foodQuantities[index])
+                var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, oneFood.name, oneFood.price,foodQuantities[index])
                 totalPrice += receiptFood.calculateTotalItemPrice(oneFood.price!!)
                 foodDao.insertReceiptFoodCrossRef(receiptFood)
             } else {
@@ -130,7 +130,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
     private fun goToReceiptActivity() {
         TODO("Not yet implemented")
     }
-    private fun getSalesThisMonth() : List<FoodSum>{
+    private suspend fun getSalesThisMonth() : List<FoodSum>{
         val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
         return foodDao.getTotalItemPricePerFoodId(startOfMonth)
     }

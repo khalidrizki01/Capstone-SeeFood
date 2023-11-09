@@ -16,26 +16,26 @@ import java.util.UUID
 
 @Dao
 interface FoodDao {
-    @Insert
-    abstract fun insert(receipt: Receipt): Long
-    @Insert
-    abstract fun insert(receiptFoodCrossRef: ReceiptFoodCrossRef) : Long
-    @Insert
-    abstract fun insert(food: Food): Long
+//    @Insert
+//    fun insert(receipt: Receipt): Long
+//    @Insert
+//    fun insert(receiptFoodCrossRef: ReceiptFoodCrossRef) : Long
+//    @Insert
+//    fun insert(food: Food): Long
     @Transaction
     @Query("SELECT * FROM receipt")
     fun getAllFullReceipts() : List<ReceiptWithFoods>
 //  Untuk meng-insert data makanan
     @Insert
-    fun insertFood(food : Food)
+    suspend fun insertFood(food : Food)
 
 //  Untuk meng-insert nota
     @Insert
-    fun insertReceipt(receipt : Receipt)
+    suspend fun insertReceipt(receipt : Receipt)
 
 //  Untuk meng-insert hubungan antara nota dengan makanan
     @Insert
-    fun insertReceiptFoodCrossRef(crossRef: ReceiptFoodCrossRef)
+    suspend fun insertReceiptFoodCrossRef(crossRef: ReceiptFoodCrossRef)
 
 //    Insert Many Receipt Food Cross Ref: Ketika menyimpan data receipt?
 
@@ -56,7 +56,7 @@ interface FoodDao {
         WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate)
         GROUP BY rf.foodId
     """)
-    fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
+    suspend fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
 
     @Transaction
 //    @Query("SELECT foodId, SUM(quantity) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
@@ -71,7 +71,7 @@ interface FoodDao {
 
     @Transaction
     @Query("SELECT * FROM food WHERE name == :foodName LIMIT 1")
-    fun getFoodBasedOnName(foodName : String) : Food
+    suspend fun getFoodBasedOnName(foodName : String) : Food
 
     @Query("SELECT * FROM receipt WHERE createdAt >= :date")
     fun getReceiptFrom(date: LocalDateTime) : List<Receipt>
