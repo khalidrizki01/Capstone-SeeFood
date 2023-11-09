@@ -18,10 +18,12 @@ import com.example.capstone_seefood.db.Food
 import com.example.capstone_seefood.db.FoodDao
 import com.example.capstone_seefood.db.FoodDatabase
 import com.example.capstone_seefood.db.Receipt
+import com.example.capstone_seefood.db.relations.FoodSum
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -75,7 +77,11 @@ class ConfirmPaymentActivity : AppCompatActivity() {
             GlobalScope.launch(Dispatchers.Main) {
                 binding.imgOrder.setImageResource(ayamid)
             }
-//            storeReceipt()
+            storeReceipt()
+            val listPenjualan = getSalesThisMonth()
+            for((name, total) in listPenjualan) {
+                Log.d("DB", "${name} : ${total}")
+            }
 //            receipts.forEach { foodDao.insertReceipt(it) }
 //            receiptFoodRelations.forEach { foodDao.insertReceiptFoodCrossRef(it) }
 //            val receiptWithFoods = foodDao.getReceiptWithFoods(receipt1Id)
@@ -85,24 +91,8 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 
 
     private fun initData() {
-//        val listImage = listOf("ayamgoreng", "nasi", "sambal", "tahu", "tempe")
-//        val listHarga = listOf(9000, 3000, 0, 1000, 700)
-//        listImage.forEach()
-//        val ayam = resources.getIdentifier("ayamgoreng", "drawable", packageName )
-//        val ayamid = resources.getIdentifier("ayamgoreng", "drawable", packageName)
-//        val nasiid = resources.getIdentifier("nasi", "drawable", packageName)
-//        val sambalid = resources.getIdentifier("sambal", "drawable", packageName
         val ayamid = resources.getIdentifier("ayamgoreng", "drawable", packageName)
         Log.d("DB", "${ayamid.toString()}")
-//        val ayamGoreng = resources.getDrawable(R.drawable.ayamgoreng)
-        val bitmap = BitmapFactory.decodeResource(resources, ayamid)
-
-//        val ayamGorengByteArray = ayamGoreng.toBy
-
-//        val drawayam = resources.getDrawable(ayamid, null)
-//        val drawnasi = resources.getDrawable(nasiid, null)
-//        val drawasambal = resources.getDrawable(sambalid, null)
-
         val food1Id = UUID.randomUUID()
         val food2Id = UUID.randomUUID()
         val food3Id = UUID.randomUUID()
@@ -116,10 +106,10 @@ class ConfirmPaymentActivity : AppCompatActivity() {
     }
 
     private fun storeReceipt() {
-        foods.forEach { foodDao.insertFood(it) }
+//        foods.forEach { foodDao.insertFood(it) }
 
-        identifiedFoods = listOf("Nasi Goreng", "Telur")
-        foodQuantities = listOf(1, 2)
+        identifiedFoods = listOf("Nasi")
+        foodQuantities = listOf(2)
 
         var recId : UUID = UUID.randomUUID()
         var totalPrice : Int = 0
@@ -139,5 +129,9 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 
     private fun goToReceiptActivity() {
         TODO("Not yet implemented")
+    }
+    private fun getSalesThisMonth() : List<FoodSum>{
+        val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
+        return foodDao.getTotalItemPricePerFoodId(startOfMonth)
     }
 }

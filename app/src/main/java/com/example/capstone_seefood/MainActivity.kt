@@ -30,8 +30,14 @@ import java.util.UUID
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private lateinit var foodDao: FoodDao
-    private lateinit var barSet: List<Pair<String, Float>>
+    private lateinit var foodDao : FoodDao
+    private lateinit var barSet : List<Pair<String, Float>>
+    private var currentChartType: ChartType = ChartType.WEEKLY // Default chart type
+    enum class ChartType {
+        DAILY,
+        WEEKLY,
+        MONTHLY
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,52 +47,31 @@ class MainActivity : AppCompatActivity() {
         foodDao = FoodDatabase.getInstance(this).foodDao
         GlobalScope.launch {
             storeReceipt()
-            var listFoodSum = getSalesThisMonth()
-            var listSale = listFoodSum.map { Pair(it.name, it.sum.toFloat()) }
-
-//            Implementasi Bar Chart
-            barSet = listSale
-            val animationDuration = 1000L
-            Log.d("CHART", "sampe sini")
-            binding.apply {
-                barChart?.animation!!.duration = animationDuration
-                barChart?.animate(barSet)
+            currentChartType = ChartType.WEEKLY
+            updateCharts()
+            binding.btnHarian.setOnClickListener {
+                currentChartType = ChartType.DAILY
+                updateCharts()
+                Log.d("CHART", "VISUALISASI DAILY")
             }
 
-//            Implementasi Pie Chart
-            val pieDataSet =
-                PieDataSet(listFoodSum.map { PieEntry(it.sum.toFloat(), it.name) }, "List")
-            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS, 255)
-            pieDataSet.valueTextColor = Color.BLACK
-            pieDataSet.valueTextSize = 15f
-            val pieData = PieData(pieDataSet)
-            binding.pieChart!!.data = pieData
-
-            binding.pieChart!!.description.text = "Pie Chart"
-
-            binding.pieChart!!.centerText = "List"
-//
-
-
-            GlobalScope.launch(Dispatchers.Main) {
-                binding.pieChart!!.animateY(2000)
+            binding.btnMingguan.setOnClickListener {
+                currentChartType = ChartType.WEEKLY
+                updateCharts()
+//            startActivity(Intent(this@MainActivity, BarChartActivityMingguan::class.java))
+                Log.d("CHART", "VISUALISASI WEEKLY")
             }
-            val (favoritMenu, mostIncome) = getTopSoldFoodName(listFoodSum)
-            binding.tvFavoriteMenu!!.text = favoritMenu
-            binding.tvTotalRevenue!!.text = "Rp${String.format("%,d", mostIncome)}"
+            binding.btnBulanan.setOnClickListener {
+                currentChartType = ChartType.MONTHLY
+                updateCharts()
+//            startActivity(Intent(this@MainActivity, BarChartActivityBulanan::class.java))
+                Log.d("CHART", "VISUALISASI MONTHLY")
+
+            }
         }
 
+//        getPermission()
 
-        getPermission()
-
-
-
-        binding.btnMingguan.setOnClickListener {
-            startActivity(Intent(this@MainActivity, BarChartActivityMingguan::class.java))
-        }
-        binding.btnBulanan.setOnClickListener {
-            startActivity(Intent(this@MainActivity, BarChartActivityBulanan::class.java))
-        }
         binding.btnPenjualan.setOnClickListener {
             startActivity(Intent(this@MainActivity, manage_price::class.java))
         }
@@ -96,32 +81,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnModeScan.setOnClickListener {
             startActivity(Intent(this@MainActivity, ScanActivity::class.java))
         }
-
-
-//        val list:ArrayList<PieEntry> = ArrayList()
-//
-//        list.add(PieEntry(100f,"100"))
-//        list.add(PieEntry(101f,"101"))
-//        list.add(PieEntry(102f,"102"))
-//        list.add(PieEntry(103f,"103"))
-//        list.add(PieEntry(104f,"104"))
-//
-//        val pieDataSet= PieDataSet(list,"List")
-//
-//        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
-//        pieDataSet.valueTextColor= Color.BLACK
-//        pieDataSet.valueTextSize=15f
-//
-//        val pieData= PieData(pieDataSet)
-//
-//        binding.pieChart!!.data= pieData
-//
-//        binding.pieChart!!.description.text= "Pie Chart"
-//
-//        binding.pieChart!!.centerText="List"
-//
-//        binding.pieChart!!.animateY(2000)
     }
+  
         fun getPermission() {
             var hwaccess = mutableListOf<String>()
 
@@ -157,19 +118,43 @@ class MainActivity : AppCompatActivity() {
             _binding = null
         }
 
-        companion object {
-//        var totaljual = arrayOf(4,7,2,3,5,4)
-//        var dictionary = arrayOf("0f","0f","0f","0f","0f")
-//        private val barSet = listOf(
-//            "Ayam Guling Kukus \n (Terjual : ${totaljual[0]})" to 2F,
-//            "Babi Panggang " to 7F,
-//            "Bakpia Bakar Mozarella" to 2F,
-//            "Sapi Geprek Sambal Terasi" to 2.3F,
-//            "Pisang Tumis Blackpepper" to 5F,
-//            "Kerang Saus Mentai" to 4F,
-//            "momogi" to 2F
-//        )
-        }
+    private fun updateCharts() {
+//        GlobalScope.launch {
+            if (currentChartType == ChartType.DAILY) { Log.d("TYPE", "VISUALISASI DAILY")}
+            Log.d("GLOBALSCOPE", "BERHASIL MASUK")
+            val listFoodSum = when (currentChartType) {
+                ChartType.DAILY -> getSalesToday()
+                ChartType.WEEKLY -> getSalesThisWeek()
+                ChartType.MONTHLY -> getSalesThisMonth()
+            }
+
+            // Update bar chart
+            barSet = listFoodSum.map { Pair(it.name, it.sum.toFloat()) }
+            val animationDuration = 1000L
+            binding.apply {
+                barChart?.animation!!.duration = animationDuration
+                barChart?.animate(barSet)
+            }
+
+            // Update pie chart
+            val pieDataSet = PieDataSet(listFoodSum.map { PieEntry(it.sum.toFloat(), it.name) }, "List")
+            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS, 255)
+            pieDataSet.valueTextColor = Color.BLACK
+            pieDataSet.valueTextSize = 15f
+            val pieData = PieData(pieDataSet)
+            binding.pieChart!!.data = pieData
+
+            binding.pieChart!!.description.text = "Pie Chart"
+            binding.pieChart!!.centerText = "List"
+
+            GlobalScope.launch(Dispatchers.Main) {
+                binding.pieChart?.animateY(2000)
+            }
+
+            val (favoritMenu, mostIncome) = getTopSoldFoodName(listFoodSum)
+            binding.tvFavoriteMenu?.text = favoritMenu
+            binding.tvTotalRevenue?.text = "Rp${String.format("%,d", mostIncome)}"
+//        }
 
         private fun getSalesToday(): List<FoodSum> {
             val today = LocalDate.now().atStartOfDay()
@@ -199,20 +184,25 @@ class MainActivity : AppCompatActivity() {
             return Pair(topSoldFood?.name ?: "", topSoldFood?.sum ?: 0)
         }
 
-        //    Inisialisasi data sales
-        private fun storeReceipt() {
-//        foods.forEach { foodDao.insertFood(it) }
-
+//    Inisialisasi data sales
+    private fun storeReceipt() {
+    //        foods.forEach { foodDao.insertFood(it) }
+//        GlobalScope.launch {
             val listOfReceipt = listOf(
                 listOf("Nasi", "Ayam Goreng", "Tahu"),
                 listOf("Nasi", "Tempe"),
-                listOf("Nasi", "Ayam Goreng", "Tempe")
+                listOf("Nasi", "Ayam Goreng", "Tempe"),
+                listOf("Tempe", "Tahu"),
+                listOf("Nasi", "Tahu")
             )
             val receiptFoodQuantities = listOf(
-                listOf(1, 1, 1),
+                listOf(1,1,1),
                 listOf(1, 3),
-                listOf(1, 1, 2)
+                listOf(1, 1, 2),
+                listOf(50, 1),
+                listOf(1, 40)
             )
+           
             for ((i, receipt) in listOfReceipt.withIndex()) {
                 for ((index, identifiedFood) in receipt.withIndex()) {
                     var foodQty = receiptFoodQuantities[i]
@@ -220,16 +210,25 @@ class MainActivity : AppCompatActivity() {
                     var totalPrice: Int = 0
                     var oneFood = foodDao.getFoodBasedOnName(identifiedFood)
                     if (oneFood.isSell) {
+
                         var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, foodQty[index])
                         totalPrice += receiptFood.calculateTotalItemPrice(oneFood.price!!)
                         foodDao.insertReceiptFoodCrossRef(receiptFood)
                     } else {
                         continue
                     }
-                    var newReceipt = Receipt(recId, totalPrice)
+
+                    val dates = listOf(LocalDate.parse("2023-11-06").atStartOfDay(), LocalDate.parse("2023-11-01").atStartOfDay())
+                    var newReceipt : Receipt
+                    if(i >= 3) {
+                        newReceipt = Receipt(recId, totalPrice, dates[i-3])
+                    } else{
+                        newReceipt = Receipt(recId, totalPrice)
+                    }
                     foodDao.insertReceipt(newReceipt)
                 }
             }
+//        }
 
 
         }
