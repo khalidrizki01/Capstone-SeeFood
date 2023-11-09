@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private lateinit var foodDao : FoodDao
     private lateinit var barSet : List<Pair<String, Float>>
-    private var currentChartType: ChartType = ChartType.DAILY // Default chart type
+    private var currentChartType: ChartType = ChartType.WEEKLY // Default chart type
     enum class ChartType {
         DAILY,
         WEEKLY,
@@ -45,29 +45,32 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         foodDao = FoodDatabase.getInstance(this).foodDao
-        storeReceipt()
-//        updateCharts()
-
-        getPermission()
-
-        binding.btnHarian.setOnClickListener {
-            currentChartType = ChartType.DAILY
-            updateCharts()
-            Log.d("CHART", "VISUALISASI DAILY")
-        }
-
-        binding.btnMingguan.setOnClickListener {
+        GlobalScope.launch {
+            storeReceipt()
             currentChartType = ChartType.WEEKLY
             updateCharts()
+            binding.btnHarian.setOnClickListener {
+                currentChartType = ChartType.DAILY
+                updateCharts()
+                Log.d("CHART", "VISUALISASI DAILY")
+            }
+
+            binding.btnMingguan.setOnClickListener {
+                currentChartType = ChartType.WEEKLY
+                updateCharts()
 //            startActivity(Intent(this@MainActivity, BarChartActivityMingguan::class.java))
-            Log.d("CHART", "VISUALISASI WEEKLY")
-        }
-        binding.btnBulanan.setOnClickListener {
-            currentChartType = ChartType.MONTHLY
-            updateCharts()
+                Log.d("CHART", "VISUALISASI WEEKLY")
+            }
+            binding.btnBulanan.setOnClickListener {
+                currentChartType = ChartType.MONTHLY
+                updateCharts()
 //            startActivity(Intent(this@MainActivity, BarChartActivityBulanan::class.java))
-            Log.d("CHART", "VISUALISASI MONTHLY")
+                Log.d("CHART", "VISUALISASI MONTHLY")
+            }
         }
+
+//        getPermission()
+
         binding.btnPenjualan.setOnClickListener {
             startActivity(Intent(this@MainActivity, manage_price::class.java))
         }
@@ -113,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateCharts() {
-        GlobalScope.launch {
+//        GlobalScope.launch {
             if (currentChartType == ChartType.DAILY) { Log.d("TYPE", "VISUALISASI DAILY")}
             Log.d("GLOBALSCOPE", "BERHASIL MASUK")
             val listFoodSum = when (currentChartType) {
@@ -148,7 +151,7 @@ class MainActivity : AppCompatActivity() {
             val (favoritMenu, mostIncome) = getTopSoldFoodName(listFoodSum)
             binding.tvFavoriteMenu?.text = favoritMenu
             binding.tvTotalRevenue?.text = "Rp${String.format("%,d", mostIncome)}"
-        }
+//        }
     }
 
     private fun getSalesToday() : List<FoodSum>{
@@ -181,16 +184,20 @@ class MainActivity : AppCompatActivity() {
 //    Inisialisasi data sales
     private fun storeReceipt() {
     //        foods.forEach { foodDao.insertFood(it) }
-        GlobalScope.launch {
+//        GlobalScope.launch {
             val listOfReceipt = listOf(
                 listOf("Nasi", "Ayam Goreng", "Tahu"),
                 listOf("Nasi", "Tempe"),
-                listOf("Nasi", "Ayam Goreng", "Tempe")
+                listOf("Nasi", "Ayam Goreng", "Tempe"),
+                listOf("Tempe", "Tahu"),
+                listOf("Nasi", "Tahu")
             )
             val receiptFoodQuantities = listOf(
                 listOf(1,1,1),
                 listOf(1, 3),
-                listOf(1, 1, 2)
+                listOf(1, 1, 2),
+                listOf(50, 1),
+                listOf(1, 40)
             )
             for((i, receipt) in listOfReceipt.withIndex()){
                 for((index, identifiedFood) in receipt.withIndex()) {
@@ -205,11 +212,18 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         continue
                     }
-                    var newReceipt = Receipt(recId, totalPrice)
+
+                    val dates = listOf(LocalDate.parse("2023-11-06").atStartOfDay(), LocalDate.parse("2023-11-01").atStartOfDay())
+                    var newReceipt : Receipt
+                    if(i >= 3) {
+                        newReceipt = Receipt(recId, totalPrice, dates[i-3])
+                    } else{
+                        newReceipt = Receipt(recId, totalPrice)
+                    }
                     foodDao.insertReceipt(newReceipt)
                 }
             }
-        }
+//        }
     }
 
 }
