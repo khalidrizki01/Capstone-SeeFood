@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,11 +16,18 @@
         android:theme="@style/Theme.CapstoneSeeFood"
         tools:targetApi="31">
         <activity
-            android:screenOrientation="landscape"
+            android:name=".StartCameraActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+        <activity
             android:name=".manage_price"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ReceiptActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RealtimeActivity"
             android:exported="false" />
         <activity
             android:name=".ConfirmPaymentActivity"
@@ -36,29 +44,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="landscape"
-            android:name=".ChartData.BarChartActivityBulanan">
-
-        </activity>
+            android:name=".ChartData.BarChartActivityBulanan"
+            android:screenOrientation="landscape"></activity>
         <activity
-            android:screenOrientation="landscape"
-            android:name=".ChartData.BarChartActivityMingguan">
-
-        </activity>
+            android:name=".ChartData.BarChartActivityMingguan"
+            android:screenOrientation="landscape"></activity>
         <activity
-            android:screenOrientation="landscape"
-            android:name=".HistoryPenjualanActivity">
-
-
-        </activity>
+            android:name=".HistoryPenjualanActivity"
+            android:screenOrientation="landscape"></activity>
         <activity
-            android:screenOrientation="landscape"
-            android:name=".ScanActivity">
-
-
-        </activity>
+            android:name=".ScanActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
-
-
 
 </manifest>
