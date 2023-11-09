@@ -1,5 +1,6 @@
 package com.example.capstone_seefood
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -23,6 +24,13 @@ import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.common.ops.NormalizeOp
+import org.tensorflow.lite.support.image.ImageProcessor
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.image.ops.ResizeOp
+import com.example.capstone_seefood.ml.BestFloat32
+import com.google.flatbuffers.Table
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
@@ -33,6 +41,13 @@ class ConfirmPaymentActivity : AppCompatActivity() {
     private lateinit var identifiedFoods : List<String>
     private lateinit var foodQuantities : List<Int>
     private lateinit var foodDao : FoodDao
+    private lateinit var scannedBitmap : Bitmap
+    private lateinit var listOrderedFood : List<IdentifiedFoodAndConf>
+
+    companion object {
+        const val SCANNED_IMAGE_BYTES = "scannedImageBytes"
+    }
+
 
 //    private lateinit var btnConfirmPayment : Button
 
@@ -49,89 +64,106 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         binding = ActivityConfirmPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var count: Int = 1
-        for (rowData in data) {
-            val tableRow = TableRow(this)
-            for (item in rowData) {
-                val textView = TextView(this)
-                textView.text = item
-                textView.gravity = Gravity.START
-                textView.setPadding(5, 5, 5, 5)
-                tableRow.addView(textView)
-            }
-            binding.tbOrder.addView(tableRow, count)
-            count++
+        val scannedImageBytes = intent.getByteArrayExtra("scannedImageBytes")
+        Log.d("IMAGE BYTES", scannedImageBytes.toString())
+        if (scannedImageBytes != null) {
+            val scannedBitmap = BitmapFactory.decodeByteArray(scannedImageBytes, 0, scannedImageBytes.size)
+            Log.d("BITMAP", scannedBitmap.toString())
+            // Gunakan scannedBitmap sesuai kebutuhan di ConfirmPaymentActivity
         }
+
+        listOrderedFood = mlTransform(scannedBitmap, this)
+        for ((name, conf) in listOrderedFood) {
+            val tableRow = TableRow(this)
+            val textView = TextView(this)
+            textView.text = name
+            textView.layoutParams = TableRow.LayoutParams(
+                TableRow.LayoutParams.WRAP_CONTENT,
+                TableRow.LayoutParams.WRAP_CONTENT
+            )
+            tableRow.addView(textView)
+            binding.tbOrder.addView(tableRow)
+        }
+
+
+//        GlobalScope.launch {
+//            var recId = UUID.randomUUID()
+//            for ((name, conf) in listOrderedFood) {
+//                var foodItem = foodDao.getFoodBasedOnName(name)
+//                foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, foodItem.foodId, foodItem.name,foodItem.price, 1))
+//            }
+//            for
+//        }
+
+
+
 
 //        binding.btnConfirmPayment.setOnClickListener {
 //            goToReceiptActivity()
 //        }
-//        initData()
-        GlobalScope.launch {
-//            foodDao.deleteAllFood()
-//            foodDao.deleteAllReceipts()
-//            foodDao.deleteAllReceiptFoodCR()
-//            foods.forEach{foodDao.insertFood(it)}
-            val foodInDB = foodDao.getFoodBasedOnName("Nasi")
-            val ayamid = resources.getIdentifier(foodInDB.photo, "drawable", packageName)
-            GlobalScope.launch(Dispatchers.Main) {
-                binding.imgOrder.setImageResource(ayamid)
-            }
-            storeReceipt()
-            val listPenjualan = getSalesThisMonth()
-            for((name, total) in listPenjualan) {
-                Log.d("DB", "${name} : ${total}")
-            }
-//            receipts.forEach { foodDao.insertReceipt(it) }
-//            receiptFoodRelations.forEach { foodDao.insertReceiptFoodCrossRef(it) }
-//            val receiptWithFoods = foodDao.getReceiptWithFoods(receipt1Id)
-        }
-    }
-
-
-
-    private fun initData() {
-        val ayamid = resources.getIdentifier("ayamgoreng", "drawable", packageName)
-        Log.d("DB", "${ayamid.toString()}")
-        val food1Id = UUID.randomUUID()
-        val food2Id = UUID.randomUUID()
-        val food3Id = UUID.randomUUID()
-        Log.d("DB", food1Id.toString())
-        Log.d("DB", food2Id.toString())
-        foods = listOf(
-            Food(1, "Ayam Goreng", "ayamgoreng", 12000, true),
-//            Food(food2Id, "Nasi", 2, 7000, true),
-//            Food(food3Id, "Sambal", 3),
-        )
-    }
-
-    private suspend fun storeReceipt() {
-//        foods.forEach { foodDao.insertFood(it) }
-
-        identifiedFoods = listOf("Nasi")
-        foodQuantities = listOf(2)
-
-        var recId : UUID = UUID.randomUUID()
-        var totalPrice : Int = 0
-        for((index, identifiedFood) in identifiedFoods.withIndex()) {
-            var oneFood = foodDao.getFoodBasedOnName(identifiedFood)
-            if(oneFood.isSell) {
-                var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, oneFood.name, oneFood.price,foodQuantities[index])
-                totalPrice += receiptFood.calculateTotalItemPrice(oneFood.price!!)
-                foodDao.insertReceiptFoodCrossRef(receiptFood)
-            } else {
-                continue
-            }
-        }
-        var newReceipt = Receipt(recId, totalPrice)
-        foodDao.insertReceipt(newReceipt)
     }
 
     private fun goToReceiptActivity() {
         TODO("Not yet implemented")
     }
-    private suspend fun getSalesThisMonth() : List<FoodSum>{
-        val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(startOfMonth)
+
+    fun mlTransform(bitmap: Bitmap, context: Context): List<IdentifiedFoodAndConf> {
+        val filename = "class.txt"
+
+        val inputString = context.resources.assets.open(filename).bufferedReader().use { it.readText() }
+        val foodList = inputString.split("\n")
+
+//    val model = Model.newInstance(context)
+        val model = BestFloat32.newInstance(context)
+
+        var resized = Bitmap.createScaledBitmap(bitmap, 640, 640, true)
+
+        // Initialize a TensorImage
+        val tensorImage = TensorImage(DataType.FLOAT32)
+
+        // Load Bitmap into TensorImage
+        tensorImage.load(resized)
+
+        // Create an ImageProcessor
+        val imageProcessor = ImageProcessor.Builder()
+            .add(ResizeOp(640, 640, ResizeOp.ResizeMethod.BILINEAR))
+            .add(NormalizeOp(0f, 255f)) // Normalize pixel values to [0,1]
+            .build()
+
+        // Process the TensorImage
+        val processedImage = imageProcessor.process(tensorImage)
+
+        Log.d("hasilinputFeature0", processedImage.toString())
+
+        val outputs = model.process(processedImage.tensorBuffer)
+
+        val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
+        val outputList = outputFeature0.toList()
+        Log.d("hasilcek", "$outputList")
+
+        var identified = getIdentifiedFoods(foodList, outputFeature0)
+
+        identified.forEach{item -> Log.d("teridentifikasi", "${item.foodName} : ${item.confidence}")}
+        // binding.resultPred.text = townList[max]
+
+        model.close()
+
+        return identified
     }
+
+    data class IdentifiedFoodAndConf (
+        val foodName : String,
+        val confidence : Float
+    )
+
+    private fun getIdentifiedFoods(foodLabels : List<String>, confidenceArr : FloatArray) : List<IdentifiedFoodAndConf>{
+        var identifiedList : MutableList<IdentifiedFoodAndConf> = mutableListOf()
+        for((index, conf) in confidenceArr.withIndex()){
+            if(conf > 0.5) {
+                identifiedList.add(IdentifiedFoodAndConf(foodLabels[index], conf))
+            }
+        }
+        return identifiedList
+    }
+
 }
