@@ -30,9 +30,8 @@ import java.util.UUID
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private lateinit var foodDao : FoodDao
-    private lateinit var barSet : List<Pair<String, Float>>
     private lateinit var foodDao: FoodDao
+    private lateinit var barSet: List<Pair<String, Float>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,16 +54,17 @@ class MainActivity : AppCompatActivity() {
             }
 
 //            Implementasi Pie Chart
-            val pieDataSet = PieDataSet(listFoodSum.map { PieEntry(it.sum.toFloat(), it.name) }, "List")
-            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS,255)
-            pieDataSet.valueTextColor= Color.BLACK
-            pieDataSet.valueTextSize=15f
-            val pieData= PieData(pieDataSet)
-            binding.pieChart!!.data= pieData
+            val pieDataSet =
+                PieDataSet(listFoodSum.map { PieEntry(it.sum.toFloat(), it.name) }, "List")
+            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS, 255)
+            pieDataSet.valueTextColor = Color.BLACK
+            pieDataSet.valueTextSize = 15f
+            val pieData = PieData(pieDataSet)
+            binding.pieChart!!.data = pieData
 
-            binding.pieChart!!.description.text= "Pie Chart"
+            binding.pieChart!!.description.text = "Pie Chart"
 
-            binding.pieChart!!.centerText="List"
+            binding.pieChart!!.centerText = "List"
 //
 
 
@@ -121,43 +121,43 @@ class MainActivity : AppCompatActivity() {
 //        binding.pieChart!!.centerText="List"
 //
 //        binding.pieChart!!.animateY(2000)
-
-    fun getPermission() {
-        var hwaccess = mutableListOf<String>()
-
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            hwaccess.add(android.Manifest.permission.CAMERA)
-        }
-        if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
-        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
-        if (hwaccess.size > 0) {
-            requestPermissions(hwaccess.toTypedArray(), 101)
-        }
     }
+        fun getPermission() {
+            var hwaccess = mutableListOf<String>()
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        grantResults.forEach {
-            if (it != PackageManager.PERMISSION_GRANTED) {
-                getPermission()
+            if (checkSelfPermission(android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                hwaccess.add(android.Manifest.permission.CAMERA)
+            }
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                hwaccess.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                hwaccess.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+            if (hwaccess.size > 0) {
+                requestPermissions(hwaccess.toTypedArray(), 101)
             }
         }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
+        override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+        ) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            grantResults.forEach {
+                if (it != PackageManager.PERMISSION_GRANTED) {
+                    getPermission()
+                }
+            }
+        }
 
-    companion object {
+        override fun onDestroy() {
+            super.onDestroy()
+            _binding = null
+        }
+
+        companion object {
 //        var totaljual = arrayOf(4,7,2,3,5,4)
 //        var dictionary = arrayOf("0f","0f","0f","0f","0f")
 //        private val barSet = listOf(
@@ -169,68 +169,69 @@ class MainActivity : AppCompatActivity() {
 //            "Kerang Saus Mentai" to 4F,
 //            "momogi" to 2F
 //        )
-    }
-
-    private fun getSalesToday() : List<FoodSum>{
-        val today = LocalDate.now().atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(today)
-    }
-    private fun getSalesThisMonth() : List<FoodSum>{
-        val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(startOfMonth)
-    }
-
-    private fun getSalesThisWeek() : List<FoodSum> {
-        val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(startOfWeek)
-    }
-
-    private fun getSalesThisYear() : List<FoodSum>{
-        val startOfYear = LocalDate.now().withDayOfYear(1).atStartOfDay()
-        return foodDao.getTotalItemPricePerFoodId(startOfYear)
-    }
-
-    fun getTopSoldFoodName(listSale: List<FoodSum>): Pair<String, Int> {
-        // Temukan food dengan sum terbanyak
-        val topSoldFood = listSale.maxBy { it.sum }
-
-        // Kembalikan name dari food tersebut
-        return Pair(topSoldFood?.name ?: "", topSoldFood?.sum ?: 0)
-    }
-
-//    Inisialisasi data sales
-    private fun storeReceipt() {
-//        foods.forEach { foodDao.insertFood(it) }
-
-        val listOfReceipt = listOf(
-            listOf("Nasi", "Ayam Goreng", "Tahu"),
-            listOf("Nasi", "Tempe"),
-            listOf("Nasi", "Ayam Goreng", "Tempe")
-        )
-        val receiptFoodQuantities = listOf(
-            listOf(1,1,1),
-            listOf(1, 3),
-            listOf(1, 1, 2)
-        )
-        for((i, receipt) in listOfReceipt.withIndex()){
-            for((index, identifiedFood) in receipt.withIndex()) {
-                var foodQty = receiptFoodQuantities[i]
-                var recId : UUID = UUID.randomUUID()
-                var totalPrice : Int = 0
-                var oneFood = foodDao.getFoodBasedOnName(identifiedFood)
-                if(oneFood.isSell) {
-                    var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, foodQty[index])
-                    totalPrice += receiptFood.calculateTotalItemPrice(oneFood.price!!)
-                    foodDao.insertReceiptFoodCrossRef(receiptFood)
-                } else {
-                    continue
-                }
-                var newReceipt = Receipt(recId, totalPrice)
-                foodDao.insertReceipt(newReceipt)
-            }
         }
 
+        private fun getSalesToday(): List<FoodSum> {
+            val today = LocalDate.now().atStartOfDay()
+            return foodDao.getTotalItemPricePerFoodId(today)
+        }
+
+        private fun getSalesThisMonth(): List<FoodSum> {
+            val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
+            return foodDao.getTotalItemPricePerFoodId(startOfMonth)
+        }
+
+        private fun getSalesThisWeek(): List<FoodSum> {
+            val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).atStartOfDay()
+            return foodDao.getTotalItemPricePerFoodId(startOfWeek)
+        }
+
+        private fun getSalesThisYear(): List<FoodSum> {
+            val startOfYear = LocalDate.now().withDayOfYear(1).atStartOfDay()
+            return foodDao.getTotalItemPricePerFoodId(startOfYear)
+        }
+
+        fun getTopSoldFoodName(listSale: List<FoodSum>): Pair<String, Int> {
+            // Temukan food dengan sum terbanyak
+            val topSoldFood = listSale.maxBy { it.sum }
+
+            // Kembalikan name dari food tersebut
+            return Pair(topSoldFood?.name ?: "", topSoldFood?.sum ?: 0)
+        }
+
+        //    Inisialisasi data sales
+        private fun storeReceipt() {
+//        foods.forEach { foodDao.insertFood(it) }
+
+            val listOfReceipt = listOf(
+                listOf("Nasi", "Ayam Goreng", "Tahu"),
+                listOf("Nasi", "Tempe"),
+                listOf("Nasi", "Ayam Goreng", "Tempe")
+            )
+            val receiptFoodQuantities = listOf(
+                listOf(1, 1, 1),
+                listOf(1, 3),
+                listOf(1, 1, 2)
+            )
+            for ((i, receipt) in listOfReceipt.withIndex()) {
+                for ((index, identifiedFood) in receipt.withIndex()) {
+                    var foodQty = receiptFoodQuantities[i]
+                    var recId: UUID = UUID.randomUUID()
+                    var totalPrice: Int = 0
+                    var oneFood = foodDao.getFoodBasedOnName(identifiedFood)
+                    if (oneFood.isSell) {
+                        var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, foodQty[index])
+                        totalPrice += receiptFood.calculateTotalItemPrice(oneFood.price!!)
+                        foodDao.insertReceiptFoodCrossRef(receiptFood)
+                    } else {
+                        continue
+                    }
+                    var newReceipt = Receipt(recId, totalPrice)
+                    foodDao.insertReceipt(newReceipt)
+                }
+            }
 
 
+        }
     }
-}
+
