@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        getPermission()
+//        getPermission()
 
         binding.btnPenjualan.setOnClickListener {
             startActivity(Intent(this@MainActivity, manage_price::class.java))
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, HistoryPenjualanActivity::class.java))
         }
         binding.btnModeScan.setOnClickListener {
-            startActivity(Intent(this@MainActivity, ScanActivity::class.java))
+            startActivity(Intent(this@MainActivity, StartCameraActivity::class.java))
         }
     }
   
