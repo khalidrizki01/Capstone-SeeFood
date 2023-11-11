@@ -6,11 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color1"
-    tools:context=".ui.menu.MenuFragment">
+    tools:context=".ui.menu.FragmentMenu">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnMenu">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,35 +48,6 @@
                 android:textSize="26sp"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="16dp"/>
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/title_food_around_you"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="26sp"-->
-<!--                android:layout_marginStart="16dp"/>-->
-<!--            <HorizontalScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_margin="16dp">-->
-<!--                <com.google.android.material.chip.ChipGroup-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    app:singleLine="true">-->
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/txt_popular"-->
-<!--                        app:chipBackgroundColor="@color/white"-->
-<!--                        app:rippleColor="@color/color2"/>-->
-<!--                    <com.google.android.material.chip.Chip-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/txt_menu"-->
-<!--                        app:chipBackgroundColor="@color/white"-->
-<!--                        app:rippleColor="@color/color2"/>-->
-<!--                </com.google.android.material.chip.ChipGroup>-->
-<!--            </HorizontalScrollView>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_edit_24"
@@ -99,7 +74,10 @@
                             android:textOff=""
                             android:textOn=""
                             android:layout_margin="6dp"
-                            android:layout_gravity="end"/>
+                            android:layout_gravity="end"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
                         <ImageView
                             android:layout_width="96dp"
                             android:layout_height="96dp"
@@ -129,7 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_edit_24"
@@ -168,7 +146,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_edit_24"
@@ -215,7 +193,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_edit_24"
@@ -254,7 +232,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_edit_24"
@@ -293,7 +271,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_edit_24"
@@ -349,7 +327,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_add_24"
@@ -381,7 +359,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_add_24"
@@ -413,7 +391,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_add_24"
@@ -453,7 +431,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_add_24"
@@ -485,7 +463,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_add_24"
@@ -519,7 +497,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                        <ToggleButton
+                        <Button
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/ic_baseline_add_24"
@@ -558,4 +536,5 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
