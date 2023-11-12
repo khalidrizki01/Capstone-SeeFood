@@ -10,4 +10,7 @@ class FragmentMenuViewModel : ViewModel() {
         value = "This is Menu Fragment"
     }
     val text: LiveData<String> = _text
+    val name: String = "Nasi Goreng"
+    val price: String = "Rp12.000"
+//    val imageResId: //Resource ID for the menu item image
 }
