@@ -14,7 +14,7 @@ import retrofit2.http.Query
 interface ApiService {
 
     @Multipart
-    @POST("/detect")
+    @POST("/detect/")
     fun uploadImage(
         @Part image: MultipartBody.Part
     ): Call<ResultModel>
