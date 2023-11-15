@@ -29,8 +29,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
-    private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : ActivityMainBinding
     private lateinit var foodDao : FoodDao
     private lateinit var barSet : List<Pair<String, Float>>
     private var currentChartType: ChartType = ChartType.DAILY // Default chart type
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         foodDao = FoodDatabase.getInstance(this).foodDao
@@ -129,13 +128,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        binding = null
+//    }
     private suspend fun updateCharts() {
 //        GlobalScope.launch {
-        if (currentChartType == ChartType.DAILY) { Log.d("TYPE", "VISUALISASI DAILY")}
+//        if (currentChartType == ChartType.DAILY) { Log.d("TYPE", "VISUALISASI DAILY")}
         val listFoodSum = when (currentChartType) {
             ChartType.DAILY -> getSalesToday()
             ChartType.WEEKLY -> getSalesThisWeek()
