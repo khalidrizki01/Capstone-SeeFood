@@ -25,6 +25,11 @@ interface FoodDao {
     @Transaction
     @Query("SELECT * FROM receipt")
     fun getAllFullReceipts() : List<ReceiptWithFoods>
+
+    @Transaction
+    @Query("SELECT * FROM receipt WHERE receiptid == :recid LIMIT 1")
+    fun getReceiptWithFoods(recid : String) : List<ReceiptWithFoods>
+
 //  Untuk meng-insert data makanan
     @Insert
     suspend fun insertFood(food : Food)
@@ -36,6 +41,12 @@ interface FoodDao {
 //  Untuk meng-insert hubungan antara nota dengan makanan
     @Insert
     suspend fun insertReceiptFoodCrossRef(crossRef: ReceiptFoodCrossRef)
+
+    @Query("SELECT * FROM receiptfoodcrossref WHERE receiptId == :recId")
+    suspend fun getReceiptFoodCrossRef(recId : String) : List<ReceiptFoodCrossRef>
+
+    @Query("SELECT * FROM receiptfoodcrossref")
+    suspend fun getAllReceiptFoodCrossRef() : List<ReceiptFoodCrossRef>
 
 //    Insert Many Receipt Food Cross Ref: Ketika menyimpan data receipt?
 
@@ -53,7 +64,7 @@ interface FoodDao {
         SELECT f.name, SUM(rf.totalItemPrice) as sum
         FROM ReceiptFoodCrossRef rf
         INNER JOIN Food f ON rf.foodId = f.foodId
-        WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate)
+        WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt >= :startDate)
         GROUP BY rf.foodId
     """)
     suspend fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
@@ -64,7 +75,7 @@ interface FoodDao {
         SELECT rf.foodId, f.name, SUM(rf.quantity) as sum
         FROM ReceiptFoodCrossRef rf
         INNER JOIN Food f ON rf.foodId = f.foodId
-        WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate)
+        WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt >= :startDate)
         GROUP BY rf.foodId
     """)
     fun getQuantityPerFoodId(startDate: LocalDateTime): List<FoodSum>

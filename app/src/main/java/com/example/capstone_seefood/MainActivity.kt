@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private lateinit var foodDao : FoodDao
     private lateinit var barSet : List<Pair<String, Float>>
-    private var currentChartType: ChartType = ChartType.WEEKLY // Default chart type
+    private var currentChartType: ChartType = ChartType.DAILY // Default chart type
     enum class ChartType {
         DAILY,
         WEEKLY,
@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
 
             binding.btnHarian.setOnClickListener {
                 currentChartType = ChartType.DAILY
+                binding.tvRevenue!!.text = "Total Penjualan Hari Ini"
+                binding.tvStarMenu!!.text = "Menu Terlaris Hari Ini"
                 GlobalScope.launch{
                     updateCharts()
                 }
@@ -65,6 +67,8 @@ class MainActivity : AppCompatActivity() {
 
             binding.btnMingguan.setOnClickListener {
                 currentChartType = ChartType.WEEKLY
+                binding.tvRevenue!!.text = "Total Penjualan Minggu Ini"
+                binding.tvStarMenu!!.text = "Menu Terlaris Minggu Ini"
                 GlobalScope.launch{
                     updateCharts()
                 }
@@ -73,6 +77,8 @@ class MainActivity : AppCompatActivity() {
             }
             binding.btnBulanan.setOnClickListener {
                 currentChartType = ChartType.MONTHLY
+                binding.tvRevenue!!.text = "Total Penjualan Bulan ini"
+                binding.tvStarMenu!!.text = "Menu Terlaris Bulan Ini"
                 GlobalScope.launch{
                     updateCharts()
                 }
@@ -214,7 +220,7 @@ class MainActivity : AppCompatActivity() {
                 var oneFood = foodDao.getFoodBasedOnName(identifiedFood)
                 if (oneFood.isSell) {
                     var receiptFood = ReceiptFoodCrossRef(recId, oneFood.foodId, oneFood.name, oneFood.price, foodQty[index])
-                    totalPrice += receiptFood.calculateTotalItemPrice(oneFood.price!!)
+                    totalPrice += receiptFood.calculateTotalItemPrice()
                     foodDao.insertReceiptFoodCrossRef(receiptFood)
                 } else {
                     continue
