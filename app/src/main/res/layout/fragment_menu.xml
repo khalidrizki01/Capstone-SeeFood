@@ -108,12 +108,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_mie_goreng"
+                            android:text="Nasi"
                             android:layout_gravity="center"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_price_1"
+                            android:text="Rp3.000"
                             android:textSize="14sp"
                             android:textColor="@color/black"
                             android:layout_gravity="center"/>
@@ -147,12 +147,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_mie_rebus"
+                            android:text="Ayam Goreng"
                             android:layout_gravity="center"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_price_2"
+                            android:text="8000"
                             android:textSize="14sp"
                             android:textColor="@color/black"
                             android:layout_gravity="center"/>
@@ -183,15 +183,16 @@
                             android:layout_height="96dp"
                             android:src="@drawable/menumakan"
                             android:layout_gravity="center"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_mie_dok_dok"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:text="Tahu" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_price_3"
+                            android:text="Rp1.000"
                             android:textSize="14sp"
                             android:textColor="@color/black"
                             android:layout_gravity="center"/>
@@ -233,12 +234,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_magelangan"
+                            android:text="Tempe"
                             android:layout_gravity="center"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_price_4"
+                            android:text="Rp700"
                             android:textSize="14sp"
                             android:textColor="@color/black"
                             android:layout_gravity="center"/>
@@ -272,7 +273,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_nasi_putih"
+                            android:text="@string/txt_magelangan"
                             android:layout_gravity="center"/>
                         <TextView
                             android:layout_width="wrap_content"

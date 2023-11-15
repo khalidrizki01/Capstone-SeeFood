@@ -35,9 +35,14 @@ fun mlTransform(bitmap: Bitmap, context: Context) { // : PredictResult
         .build()
 
     // Process the TensorImage
+
     val processedImage = imageProcessor.process(tensorImage)
     val outputs = model.process(processedImage)
     Log.d("OUTPUT", outputs.toString())
+//    val (x, y, w, h, p1, p2, p3, p4, p5) = outputs.outputAsCategoryList
+//    for (it in output) {
+//        Log.d("OUTPUT", "${it::class.simpleName}")
+//    }
 //    val output = outputs.outputAsCategoryList
 //    val listOutputs = mutableListOf()
 }

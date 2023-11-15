@@ -89,9 +89,10 @@
                         android:textStyle="bold"
                         />
                     <TextView
+                        android:id="@+id/tvTotalHarga"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="32dp"
+                        android:paddingEnd="64dp"
                         android:text="0"
                         android:layout_column="3"
                         android:layout_gravity="right"
@@ -102,6 +103,7 @@
     </androidx.cardview.widget.CardView>
     <ImageView
         android:id="@+id/imgOrder"
+
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="24dp"

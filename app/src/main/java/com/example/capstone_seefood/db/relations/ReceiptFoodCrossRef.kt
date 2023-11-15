@@ -15,8 +15,13 @@ data class ReceiptFoodCrossRef(
     val quantity: Int,
 ) : Parcelable {
     var totalItemPrice : Int? = null
-    fun calculateTotalItemPrice(foodPrice:Int) : Int{
-        var totalItemPrice =  this.quantity * foodPrice
+
+    init {
+
+        calculateTotalItemPrice()
+    }
+    fun calculateTotalItemPrice() : Int {
+        var totalItemPrice =  this.quantity * this.foodPrice!!
         this.totalItemPrice = totalItemPrice
         return totalItemPrice
     }

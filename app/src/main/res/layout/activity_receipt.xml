@@ -11,54 +11,53 @@
         android:id="@+id/textView1"
         android:layout_width="164dp"
         android:layout_height="58dp"
-        android:layout_marginStart="528dp"
         android:layout_marginTop="96dp"
         android:text="@string/title_receipt"
         android:textColor="@color/black"
         android:textSize="40sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="93dp"
         android:layout_height="29dp"
+        android:layout_marginTop="16dp"
         android:text="SeeFood"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="563dp"
-        tools:layout_editor_absoluteY="170dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintHorizontal_bias="0.14"
         android:text="Tanggal Pembelian"
         android:textColor="@color/black"
         android:textStyle="normal|bold"
-        tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="278dp" />
-    <EditText
-        android:id="@+id/editTextDate"
-        android:layout_width="214dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:inputType="date"
-        tools:layout_editor_absoluteX="870dp"
-        tools:layout_editor_absoluteY="263dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="972dp"
         android:layout_height="176dp"
-        android:layout_marginStart="100dp"
         android:layout_marginTop="304dp"
         android:background="@color/grey"
         app:cardCornerRadius="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-<!--        app:layout_constraintBottom_toTopOf="@id/btnReceipt"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/guideline"-->
+        <!--        app:layout_constraintBottom_toTopOf="@id/btnReceipt"-->
+        <!--        app:layout_constraintEnd_toStartOf="@+id/guideline"-->
 
 
         <LinearLayout
@@ -148,49 +147,8 @@
                         android:textStyle="bold" />
                 </TableRow>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:gravity="center"
-                        android:text="Pembayaran"
-                        android:textStyle="normal" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="3"
-                        android:layout_gravity="right"
-                        android:paddingEnd="32dp"
-                        android:text="0"
-                        android:textStyle="bold" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:gravity="center"
-                        android:text="Kembalian"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="3"
-                        android:layout_gravity="right"
-                        android:paddingEnd="32dp"
-                        android:text="0"
-                        android:textStyle="bold" />
-                </TableRow>
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -201,24 +159,31 @@
         android:layout_height="55dp"
         android:onClick="saveChanges"
         android:text="Print"
-        tools:layout_editor_absoluteX="156dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
         tools:layout_editor_absoluteY="754dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnKembali"
         android:layout_width="449dp"
         android:layout_height="55dp"
         android:onClick="saveChanges"
-        android:text="Kirim"
-        tools:layout_editor_absoluteX="628dp"
+        android:text="Kembali"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
         tools:layout_editor_absoluteY="756dp" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add New Note"
-        tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="820dp" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="637dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
