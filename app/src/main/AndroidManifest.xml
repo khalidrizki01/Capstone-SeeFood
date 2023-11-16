@@ -31,6 +31,9 @@
             android:name=".ReceiptActivity"
             android:exported="false" />
         <activity
+            android:name=".KelolaMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".ConfirmPaymentActivity"
             android:exported="false" />
         <activity
