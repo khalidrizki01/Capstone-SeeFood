@@ -2,30 +2,22 @@ package com.example.capstone_seefood
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.capstone_seefood.databinding.ActivityHistoryPenjualanBinding
 import com.example.capstone_seefood.db.FoodDao
+import com.example.capstone_seefood.db.FoodDatabase
 import com.example.capstone_seefood.db.Receipt
 import com.example.capstone_seefood.db.relations.FoodSum
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
 
 class HistoryPenjualanActivity: AppCompatActivity() {
     private lateinit var binding: ActivityHistoryPenjualanBinding
     private lateinit var recyclerView: RecyclerView
+    private lateinit var paymentIDList: ArrayList<PaymentID>
     private lateinit var paymentIDAdapter: PaymentIDAdapter
-    private lateinit var paymentIDList: ArrayList<Receipt>
-    private lateinit var foodDao : FoodDao
-    private var currentHistoryType: HistoryType = HistoryType.DAILY // Default chart type
-    enum class HistoryType {
-        DAILY,
-        WEEKLY,
-        MONTHLY
-    }
+    private lateinit var foodDao: FoodDao
 //    val solditems = listOf(
 //        listOf("Pay#0001", "19 Agustus 07:02", "Rp 25,000", "Cash"),
 //        listOf("Pay#0002", "19 Agustus 08:10", "Rp 52,000", "OVO"),
@@ -40,32 +32,65 @@ class HistoryPenjualanActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("CEK INI", "masuk")
+        foodDao = FoodDatabase.getInstance(this).foodDao
+
         binding = ActivityHistoryPenjualanBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         recyclerView = findViewById(R.id.rvPaymentID)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        GlobalScope.launch{
-            updateHistory()
-        }
+
+        val arraypayment: ArrayList<Receipt> = ArrayList(getSalesToday())
+        paymentIDList = ArrayList()
+
+        paymentIDAdapter = PaymentIDAdapter(arraypayment)
         recyclerView.adapter = paymentIDAdapter
-        paymentIDAdapter.onItemClick = {
-            val intent = Intent(this, ReceiptActivity::class.java)
-            intent.putExtra("paymentid", it)
-            startActivity(intent)
-        }
 
         binding.btnHistoryMinggu.setOnClickListener {
-            currentHistoryType =HistoryType.WEEKLY
-            GlobalScope.launch{
-                updateHistory()
+            val arraypayment: ArrayList<Receipt> = ArrayList(getSalesThisWeek())
+            paymentIDList = ArrayList()
+
+            paymentIDAdapter = PaymentIDAdapter(arraypayment)
+            recyclerView.adapter = paymentIDAdapter
+            paymentIDAdapter.onItemClick={
+                val intent = Intent(this, ReceiptActivity::class.java)
+                intent.putExtra("paymentid",it)
+                startActivity(intent)
             }
+
         }
+        binding.btnHistoryBulan.setOnClickListener {
+            val arraypayment: ArrayList<Receipt> = ArrayList(getSalesThisMonth())
+            paymentIDList = ArrayList()
 
+            paymentIDAdapter = PaymentIDAdapter(arraypayment)
+            recyclerView.adapter = paymentIDAdapter
+            paymentIDAdapter.onItemClick={
+                val intent = Intent(this, ReceiptActivity::class.java)
+                intent.putExtra("paymentid",it)
+                startActivity(intent)
+            }
 
+        }
+        binding.button.setOnClickListener {
+            val arraypayment: ArrayList<Receipt> = ArrayList(getSalesToday())
+            paymentIDList = ArrayList()
+
+            paymentIDAdapter = PaymentIDAdapter(arraypayment)
+            recyclerView.adapter = paymentIDAdapter
+            paymentIDAdapter.onItemClick={
+                val intent = Intent(this, ReceiptActivity::class.java)
+                intent.putExtra("paymentid",it)
+                startActivity(intent)
+            }
+
+        }
+        paymentIDAdapter.onItemClick={
+            val intent = Intent(this, ReceiptActivity::class.java)
+            intent.putExtra("paymentid",it)
+            startActivity(intent)
+        }
 //        var count: Int = 1
 //        for (rowData in solditems) {
 //            val tableRow = TableRow(this)
@@ -87,28 +112,21 @@ class HistoryPenjualanActivity: AppCompatActivity() {
 
 
     }
-    private suspend fun updateHistory() {
-        val paymentIDList = when (currentHistoryType) {
-            HistoryType.DAILY -> getSalesToday()
-            HistoryType.WEEKLY -> getSalesThisWeek()
-            HistoryType.MONTHLY -> getSalesThisMonth()
-        }
-        val arrayPaymentID : ArrayList<Receipt> = ArrayList(paymentIDList)
-        Log.d("CEK INI", arrayPaymentID.toString())
-        paymentIDAdapter = PaymentIDAdapter(arrayPaymentID)
 
-    }
-    private suspend fun getSalesToday(): List<Receipt> {
+    private fun getSalesToday(): List<Receipt> {
+
+        foodDao = FoodDatabase.getInstance(this).foodDao
         val today = LocalDate.now().atStartOfDay()
         return foodDao.getReceiptFrom(today)
     }
-    private suspend fun getSalesThisMonth(): List<Receipt> {
+    private fun getSalesThisMonth(): List<Receipt> {
         val startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay()
         return foodDao.getReceiptFrom(startOfMonth)
     }
 
-    private suspend fun getSalesThisWeek(): List<Receipt> {
+    private fun getSalesThisWeek(): List<Receipt> {
         val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY).atStartOfDay()
         return foodDao.getReceiptFrom(startOfWeek)
     }
+
 }

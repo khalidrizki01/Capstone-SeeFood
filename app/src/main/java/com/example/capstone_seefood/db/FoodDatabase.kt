@@ -29,8 +29,11 @@ abstract class FoodDatabase : RoomDatabase() {
                     context.applicationContext,
                     FoodDatabase::class.java,
                     "seefood-db"
+
                 ).createFromAsset("database/seefood.db"
-                ).fallbackToDestructiveMigration().build().also{
+
+                ).allowMainThreadQueries()
+                    .fallbackToDestructiveMigration().build().also{
                     INSTANCE = it
                 }
             }

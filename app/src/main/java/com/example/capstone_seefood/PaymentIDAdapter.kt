@@ -28,9 +28,9 @@ class PaymentIDAdapter(private val paymentIDList:ArrayList<Receipt>):
 
     override fun onBindViewHolder(holder: PaymentIDViewHolder, position: Int) {
         val paymentid = paymentIDList[position]
-        holder.textViewpayid.text = paymentid.receiptId.toString()
-        holder.textdate.text = paymentid.createdAt.toString()
-        holder.texttprice.text = paymentid.totalPrice.toString()
+        holder.textViewpayid.text = paymentid.receiptId.toString()//paymentID //receiptId.toString()
+        holder.textdate.text = paymentid.createdAt.toString()//date //createdAt.toString()
+        holder.texttprice.text = "Rp${paymentid.totalPrice.toString()}" //total //totalPrice.toString()
         holder.itemView.setOnClickListener{
             onItemClick?.invoke(paymentid)
         }
