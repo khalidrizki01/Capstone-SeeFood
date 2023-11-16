@@ -128,38 +128,18 @@
                         android:text="Total Payment"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="3"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:gravity="center_horizontal"
-                        android:text="Jenis Pembayaran"
-                        android:textStyle="bold" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:gravity="center"
-                        android:text="Total Penjualan"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="3"
-                        android:layout_gravity="right"
-                        android:paddingEnd="32dp"
-                        android:text="0"
-                        android:textStyle="bold" />
                 </TableRow>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPaymentID"
+                    android:layout_width="94dp"
+                    android:layout_height="322dp" />
             </TableLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -174,5 +154,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guidelinev2"
         app:layout_constraintTop_toTopOf="@+id/guidelineh1" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

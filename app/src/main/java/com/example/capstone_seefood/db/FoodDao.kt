@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.capstone_seefood.PaymentID
 import com.example.capstone_seefood.db.relations.FoodSum
 import com.example.capstone_seefood.db.relations.FoodWithReceipts
 //import com.example.capstone_seefood.db.relations.FoodWithReceipts
@@ -75,6 +76,7 @@ interface FoodDao {
     """)
 //    fun getTotalItemPricePerFoodId(startDate: LocalDateTime): Flow<List<FoodSum>>
     suspend fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
+
 
     @Transaction
 //    @Query("SELECT foodId, SUM(quantity) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
