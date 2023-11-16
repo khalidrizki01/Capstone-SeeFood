@@ -14,18 +14,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf=""
         android:text="Menu Tersedia"
         android:textSize="40sp"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMenuTersedia"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/tvMenuTersedia"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideKelolaMenu"
+
         />
 
     <TextView
@@ -41,11 +41,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTambahkanMenu"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/tvTambahkanMenu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -54,6 +55,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="384dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="1265dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

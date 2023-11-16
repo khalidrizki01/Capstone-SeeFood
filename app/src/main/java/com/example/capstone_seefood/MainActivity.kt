@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 //        getPermission()
 
         binding.btnPenjualan.setOnClickListener {
-            startActivity(Intent(this@MainActivity, manage_price::class.java))
+            startActivity(Intent(this@MainActivity, KelolaMenuActivity::class.java))
         }
         binding.btnRiwayatTransaksi.setOnClickListener {
             startActivity(Intent(this@MainActivity, HistoryPenjualanActivity::class.java))

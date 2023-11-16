@@ -86,4 +86,13 @@
     <string name="txt_total">Total:</string>
     <string name="txt_checkout">Checkout</string>
     <string name="take_photo">Ambil Gambar</string>
+    <integer-array name="available_photo">
+        <item>@drawable/nasi</item>
+        <item>@drawable/ayamgoreng</item>
+        <item>@drawable/tahu</item>
+        <item>@drawable/tempe</item>
+    </integer-array>
+    <integer-array name="unavailable_photo">
+        <item>@drawable/sambal</item>
+    </integer-array>
 </resources>

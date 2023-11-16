@@ -22,12 +22,12 @@ private fun ImageView.setImageResource(name: CharSequence?) {
 
 }
 
-class FragmentMenu(val name: CharSequence) : Fragment() {
+class FragmentMenu() : Fragment() { // class FragmentMenu(val name: CharSequence) : Fragment() {
 
-    private val price: String = ""
-    private val imageResource: Int = 0
-    private lateinit var scrollView: NestedScrollView
-    private lateinit var chipGroup: ChipGroup
+//    private val price: String = ""
+//    private val imageResource: Int = 0
+//    private lateinit var scrollView: NestedScrollView
+//    private lateinit var chipGroup: ChipGroup
 
 
     override fun onCreateView(
@@ -36,36 +36,36 @@ class FragmentMenu(val name: CharSequence) : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_menu, container, false)
         
-        scrollView = view.findViewById(R.id.scrollview)
-        chipGroup = view.findViewById(R.id.chipGroup)
+//        scrollView = view.findViewById(R.id.scrollview)
+//        chipGroup = view.findViewById(R.id.chipGroup)
 
-        val chipGroup = view.findViewById<ChipGroup>(R.id.chipGroup)
-        val scrollView = view.findViewById<ScrollView>(R.id.scrollview)
-        val cardViews = mutableListOf<MaterialCardView>()
-
-        val menuList = listOf(
-            FragmentMenu("Mie Goreng", R.drawable.menumakan, "Rp 6000"),
-            FragmentMenu("Mie Goreng", R.drawable.menumakan, "Rp 6000"),
-            FragmentMenu("Mie Goreng", R.drawable.menumakan, "Rp 6000")
-        )
+//        val chipGroup = view.findViewById<ChipGroup>(R.id.chipGroup)
+//        val scrollView = view.findViewById<ScrollView>(R.id.scrollview)
+//        val cardViews = mutableListOf<MaterialCardView>()
+//
+//        val menuList = listOf(
+//            FragmentMenu("Mie Goreng", R.drawable.menumakan, "Rp 6000"),
+//            FragmentMenu("Mie Goreng", R.drawable.menumakan, "Rp 6000"),
+//            FragmentMenu("Mie Goreng", R.drawable.menumakan, "Rp 6000")
+//        )
+//
+//        for (menu in menuList){
+//            val chip = Chip(requireContext())
+//            chip.text = menu.name
+//            chipGroup.addView(chip)
+//        }
         
-        for (menu in menuList){
-            val chip = Chip(requireContext())
-            chip.text = menu.name
-            chipGroup.addView(chip)
-        }
-        
-        for (menu in menuList){
-            val cardView = LayoutInflater.from(requireContext()).inflate(
-                R.layout.fragment_menu,
-                scrollView,
-                false) as MaterialCardView
-            cardView.findViewById<ImageView>(R.id.imageViewItem).setImageResource(menu.imageResource)
-            cardView.findViewById<TextView>(R.id.textViewItemName).text= menu.name
-            cardView.findViewById<TextView>(R.id.textViewItemPrice).text= menu.price
-            
-        }
-        return TODO("Provide the return value")
+//        for (menu in menuList){
+//            val cardView = LayoutInflater.from(requireContext()).inflate(
+//                R.layout.fragment_menu,
+//                scrollView,
+//                false) as MaterialCardView
+//            cardView.findViewById<ImageView>(R.id.imageViewItem).setImageResource(menu.imageResource)
+//            cardView.findViewById<TextView>(R.id.textViewItemName).text= menu.name
+//            cardView.findViewById<TextView>(R.id.textViewItemPrice).text= menu.price
+//
+//        }
+        return view//TODO("Provide the return value")
     }
 
     private fun FragmentMenu(s: String, menumakan: Int, s1: String): FragmentMenu {
