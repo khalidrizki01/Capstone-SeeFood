@@ -1,16 +1,10 @@
 package com.example.capstone_seefood
 
-//import com.google.flatbuffers.Table
-
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.provider.Settings.Global
 import android.util.Log
-import android.view.Gravity
 import android.widget.TableRow
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstone_seefood.api.ApiConfig
 import com.example.capstone_seefood.api.IdentifiedFood
@@ -21,6 +15,8 @@ import com.example.capstone_seefood.db.FoodDatabase
 import com.example.capstone_seefood.db.Receipt
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 import com.example.capstone_seefood.util.ImageScaler
+import com.example.capstone_seefood.util.addTextViewToTableRow
+import com.example.capstone_seefood.util.formatNumber
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -31,7 +27,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.io.IOException
 import java.util.UUID
 
 
@@ -108,10 +103,10 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 //                                Log.d(TAG, "hasil: ${toStoreFoods[index].foodId} | ${toStoreFoods[index].name} | ${toStoreFoods[index].price} | ${toStoreFoods[index].quantity} | ${toStoreFoods[index].totalItemPrice}")
 
                                 // Menambahkan ke tabel row
-                                addTextViewToTableRow(tableRow, foodItem.name)
-                                addTextViewToTableRow(tableRow, food.count.toString())
-                                addTextViewToTableRow(tableRow, "Rp${foodItem.price.toString()}")
-                                addTextViewToTableRow(tableRow, "Rp${crossRef.totalItemPrice}")
+                                addTextViewToTableRow(this@ConfirmPaymentActivity, tableRow, foodItem.name)
+                                addTextViewToTableRow(this@ConfirmPaymentActivity,tableRow, food.count.toString())
+                                addTextViewToTableRow(this@ConfirmPaymentActivity,tableRow, "Rp${formatNumber(foodItem.price!!)}")
+                                addTextViewToTableRow(this@ConfirmPaymentActivity,tableRow, "Rp${formatNumber(crossRef.totalItemPrice!!)}")
                                 Log.d(TAG, crossRef.totalItemPrice.toString())
 
                                 totalPrice += crossRef.totalItemPrice!!
@@ -122,7 +117,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
                                 Log.d(TAG, "Berhasil menambah table row ke table layout di xml")
                                 if (index == listOrderedFood.size - 1) {
                                     // Jika ini adalah iterasi terakhir, maka tampilkan total harga ke table layout di xml
-                                    binding.tvTotalHarga.text = "Rp$totalPrice"
+                                    binding.tvTotalHarga.text = "Rp${formatNumber(totalPrice)}"
                                     Log.d(TAG, "toStoreFoods: ${toStoreFoods}")
                                 }
                             }
@@ -144,18 +139,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         }
     }
 
-    private fun addTextViewToTableRow(tableRow: TableRow, text: String) {
-        val textView = TextView(this@ConfirmPaymentActivity)
-        textView.text = text
-        val params = TableRow.LayoutParams(
-            TableRow.LayoutParams.WRAP_CONTENT,
-            TableRow.LayoutParams.WRAP_CONTENT
-        )
-        params.gravity = Gravity.CENTER // Menetapkan gravity ke tengah
-        textView.layoutParams = params
-        tableRow.addView(textView)
-        Log.d(TAG, "Berhasil menambah name $text ke table row")
-    }
+
 
     private fun goToReceiptActivity() {
         Log.d(TAG, "Mau masuk receipt")
