@@ -17,6 +17,7 @@ import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class ReceiptActivity : AppCompatActivity(){
     private lateinit var binding: ActivityReceiptBinding
@@ -25,35 +26,26 @@ class ReceiptActivity : AppCompatActivity(){
     //    lateinit var db : FoodDatabase
 
     companion object {
-        const val ORDERED_FOODS = "ordered_foods"
+        const val TAG = "ReceiptActivity"
     }
 
-//    val data = listOf(
-//        listOf("Nasi Goreng", "2", "Rp 15,000", "Rp 30,000"),
-//        listOf("Mie Goreng", "1", "Rp 12,000", "Rp 12,000"),
-//        // Tambahkan data lainnya sesuai kebutuhan
-//    )
     override fun onCreate(savedInstanceState: Bundle?) {
         foodDao = FoodDatabase.getInstance(this).foodDao
         super.onCreate(savedInstanceState)
 
-        //db = Room.databaseBuilder(applicationContext, FoodDatabase::class.java, "food-db").build()
-
         binding = ActivityReceiptBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val orderId = intent.getStringExtra("ORDER_ID")
-        val newOrderId = orderId!!.replace("-", "")
+        val confirmedReceiptId = intent.getSerializableExtra("confirmedReceiptId") as UUID
+        Log.d(TAG, "RECEIVED : ${confirmedReceiptId!!}")
 
-        Log.d("RECEIPT", "RECEIVED : ${orderId!!}")
-        Log.d("RECEIPT", newOrderId)
         var result : List<ReceiptFoodCrossRef>
 
         GlobalScope.launch{
-            result = foodDao.getAllReceiptFoodCrossRef()
-            Log.d("RECEIPT", result.toString())
+            result = foodDao.getReceiptFoodCrossRefByReceiptId(confirmedReceiptId)
+            Log.d(TAG, result.toString())
             var count: Int = 1
             for(item in result) {
-                Log.d("RECEIPT", item.foodName)
+                Log.d(TAG, item.foodName)
                 val tableRow = TableRow(this@ReceiptActivity)
 
                 // Kolom 1: Food Name
@@ -61,14 +53,12 @@ class ReceiptActivity : AppCompatActivity(){
                 foodNameTextView.text = item.foodName
                 tableRow.addView(foodNameTextView)
 
-
-
-                // Kolom 3: Quantity
+                // Kolom 2: Quantity
                 val quantityTextView = TextView(this@ReceiptActivity)
                 quantityTextView.text = item.quantity.toString()
                 tableRow.addView(quantityTextView)
 
-                // Kolom 2: Food Price
+                // Kolom 3: Food Price
                 val foodPriceTextView = TextView(this@ReceiptActivity)
                 foodPriceTextView.text = item.foodPrice?.toString() ?: "N/A"
                 tableRow.addView(foodPriceTextView)
@@ -77,7 +67,7 @@ class ReceiptActivity : AppCompatActivity(){
                 val totalItemPriceTextView = TextView(this@ReceiptActivity)
                 totalItemPriceTextView.text = item.totalItemPrice?.toString() ?: "N/A"
                 tableRow.addView(totalItemPriceTextView)
-                    // Implementasikan di sini
+
                 GlobalScope.launch(Dispatchers.Main){
                     binding.tbOrder.addView(tableRow, count)
                     count++
@@ -85,26 +75,6 @@ class ReceiptActivity : AppCompatActivity(){
             }
         }
 
-
-//        val oneReceipt = result[0]
-//        var count: Int = 1
-//        for (rowData in data) {
-//            val tableRow = TableRow(this)
-//            for (item in rowData) {
-//                val textView = TextView(this)
-//                textView.text = item
-//                textView.gravity = Gravity.START
-//                textView.setPadding(5, 5, 5, 5)
-//                tableRow.addView(textView)
-//            }
-//            binding.tbOrder.addView(tableRow, count)
-//            count++
-////        }
-//        GlobalScope.launch {
-//            initData()
-//        }
-//        binding.btnReceipt.setOnClickListener(this)
-//        }
         binding.btnKembali.setOnClickListener {
             val intent = Intent(this@ReceiptActivity, MainActivity::class.java)
             startActivity(intent)

@@ -19,7 +19,6 @@ import com.example.capstone_seefood.databinding.ActivityConfirmPaymentBinding
 import com.example.capstone_seefood.db.FoodDao
 import com.example.capstone_seefood.db.FoodDatabase
 import com.example.capstone_seefood.db.Receipt
-import com.example.capstone_seefood.db.TempFood
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 import com.example.capstone_seefood.util.ImageScaler
 import kotlinx.coroutines.Dispatchers
@@ -40,10 +39,9 @@ class ConfirmPaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfirmPaymentBinding
     private lateinit var foodDao : FoodDao
     private lateinit var listOrderedFood : List<IdentifiedFood>
-    private lateinit var toStoreFoods : MutableList<TempFood>
+    private lateinit var toStoreFoods : MutableList<ReceiptFoodCrossRef>
     private val apiService = ApiConfig.getApiService()
     private lateinit var recId : UUID
-    private lateinit var stored : UUID
     private var totalPrice = 0
 
     companion object {
@@ -51,17 +49,6 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         private const val TAG = "ConfirmPaymentActivity"
     }
 
-
-//    private lateinit var btnConfirmPayment : Button
-
-
-    val data = listOf(
-        listOf("Nasi", "1", "Rp3.000", "Rp3.000"),
-        listOf("Ayam Goreng", "1", "8.000", "Rp8.000"),
-        listOf("Tahu", "1", "Rp1.000", "Rp1.000"),
-        listOf("Tempe", "2", "Rp700", "Rp1.400")
-        // Tambahkan data lainnya sesuai kebutuhan
-    )
     override fun onCreate(savedInstanceState: Bundle?) {
         // Item yang akan menjadi object untuk dibawa ke activity selanjutnya
         toStoreFoods = mutableListOf()
@@ -83,7 +70,6 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 
         // Request body ke API machine learning
         val requestFile = scaledFile.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-//        val requestFile = myFile.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val image: MultipartBody.Part = MultipartBody.Part.createFormData(
             "file",
             myFile.name,
@@ -116,27 +102,19 @@ class ConfirmPaymentActivity : AppCompatActivity() {
                             // Menginisialisasi table row kosong
                             val tableRow = TableRow(this@ConfirmPaymentActivity)
                             if (foodItem.isSell) {
-                                // Menghitung total harga untuk masing-masing makanan (misal 2 ayam = 2 x Rp8.000)
-                                val totalItemPrice = food.count * foodItem.price!!
-
-                                // Menambahkan total item price ke total harga yang harus dibayar dalam 1 order
-                                totalPrice += totalItemPrice
-                                Log.d(TAG, "Total Price: ${totalPrice.toString()}")
-
                                 // Menambahkan tiap data iterasi ke object parcel yang nanti dibawa ke activity selanjutnya
-                                toStoreFoods.add(TempFood(foodItem.foodId, foodItem.name, food.count, foodItem.price!!, totalItemPrice))
-                                Log.d(TAG, "hasil: ${toStoreFoods[index].foodId} | ${toStoreFoods[index].name} | ${toStoreFoods[index].price} | ${toStoreFoods[index].quantity} | ${toStoreFoods[index].totalItemPrice}")
+                                var crossRef = ReceiptFoodCrossRef(recId, foodItem.foodId, foodItem.name,foodItem.price!!,  food.count)
+                                toStoreFoods.add(crossRef)
+//                                Log.d(TAG, "hasil: ${toStoreFoods[index].foodId} | ${toStoreFoods[index].name} | ${toStoreFoods[index].price} | ${toStoreFoods[index].quantity} | ${toStoreFoods[index].totalItemPrice}")
 
                                 // Menambahkan ke tabel row
                                 addTextViewToTableRow(tableRow, foodItem.name)
-                                Log.d(TAG, "Berhasil menambah name ${toStoreFoods[index].name} ke table row")
                                 addTextViewToTableRow(tableRow, food.count.toString())
-                                Log.d(TAG, "Berhasil menambah quantity ${toStoreFoods[index].quantity} ke table row")
-                                addTextViewToTableRow(tableRow, foodItem.price.toString())
-                                Log.d(TAG, "Berhasil menambah price ${toStoreFoods[index].price} ke table row")
-                                addTextViewToTableRow(tableRow, totalItemPrice.toString())
-                                Log.d(TAG, "Berhasil menambah total item price ${toStoreFoods[index].totalItemPrice} ke table row")
-                                foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, foodItem.foodId, foodItem.name,foodItem.price, food.count))
+                                addTextViewToTableRow(tableRow, "Rp${foodItem.price.toString()}")
+                                addTextViewToTableRow(tableRow, "Rp${crossRef.totalItemPrice}")
+                                Log.d(TAG, crossRef.totalItemPrice.toString())
+
+                                totalPrice += crossRef.totalItemPrice!!
                             }
 
                             GlobalScope.launch(Dispatchers.Main) {
@@ -144,7 +122,8 @@ class ConfirmPaymentActivity : AppCompatActivity() {
                                 Log.d(TAG, "Berhasil menambah table row ke table layout di xml")
                                 if (index == listOrderedFood.size - 1) {
                                     // Jika ini adalah iterasi terakhir, maka tampilkan total harga ke table layout di xml
-                                    binding.tvTotalHarga.text = totalPrice.toString()
+                                    binding.tvTotalHarga.text = "Rp$totalPrice"
+                                    Log.d(TAG, "toStoreFoods: ${toStoreFoods}")
                                 }
                             }
                         }
@@ -175,22 +154,23 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         params.gravity = Gravity.CENTER // Menetapkan gravity ke tengah
         textView.layoutParams = params
         tableRow.addView(textView)
+        Log.d(TAG, "Berhasil menambah name $text ke table row")
     }
 
     private fun goToReceiptActivity() {
         Log.d(TAG, "Mau masuk receipt")
-//        var recId = UUID.randomUUID()
-//        GlobalScope.launch {
-//            for(food in toStoreFoods) {
-//                foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, food.foodId, food.name, food.price, food.quantity))
-//            }
-//            foodDao.insertReceipt(Receipt(recId, totalPrice))
-//        }
+        addReceiptToDatabase()
         val intent = Intent(this, ReceiptActivity::class.java)
-        Log.d(TAG, stored.toString())
-        intent.putExtra("ORDER_ID", recId.toString())
-
-//        intent.putParcelableArrayListExtra("ordered_foods", ArrayList(toStoreFoods))
+        Log.d(TAG, recId.toString())
+        intent.putExtra("confirmedReceiptId", recId)
         startActivity(intent)
+    }
+
+    private fun addReceiptToDatabase(){
+        GlobalScope.launch {
+            foodDao.insertMultipleReceiptFoodCrossRef(toStoreFoods)
+            foodDao.insertReceipt(Receipt(recId, totalPrice))
+            Log.d(TAG, "Berhasil menyimpan ke database")
+        }
     }
 }

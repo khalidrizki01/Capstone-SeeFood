@@ -45,7 +45,6 @@ class StartCameraActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityStartCameraBinding
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
-    private val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 
     companion object {
         private const val TAG = "StartCamera"
@@ -151,14 +150,7 @@ class StartCameraActivity : AppCompatActivity() {
                     ).show()
                 }
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults){
-                    // Ketika berhasil menyimpan gambar, info path photo dikirimkan ke ConfirmPaymentActivity
-                    //
-
-//                    val msg = "Photo capture succeeded: ${output.savedUri}"
-//                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-//                    Log.d(TAG, msg)
+                override fun onImageSaved(output: ImageCapture.OutputFileResults){
                     val intent = Intent(this@StartCameraActivity, ConfirmPaymentActivity::class.java)
                     intent.putExtra("picture", photoFile)
                     startActivity(intent)
