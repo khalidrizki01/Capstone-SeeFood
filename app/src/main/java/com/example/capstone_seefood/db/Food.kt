@@ -13,9 +13,10 @@ import java.util.UUID
     unique = true)])
 @Parcelize
 data class Food(
-    @PrimaryKey //(autoGenerate = true)
-    val foodId : Int,
+    @PrimaryKey(autoGenerate = true)
+    val foodId : Int = 0,
     val name : String,
     val photo : String,
-    val price : Int? = null,    val isSell : Boolean = false
+    val price : Int? = null,
+    val isSell : Boolean = false
 ) : Parcelable
