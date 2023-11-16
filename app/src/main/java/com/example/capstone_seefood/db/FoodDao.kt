@@ -45,6 +45,12 @@ interface FoodDao {
     @Insert
     fun insertReceiptFoodCrossRef(crossRef: ReceiptFoodCrossRef)
 
+    @Insert
+    fun insertMultipleReceiptFoodCrossRef(crossRefs : List<ReceiptFoodCrossRef>)
+
+    @Query("SELECT * FROM receipt WHERE receiptId == :recId")
+    suspend fun getOneReceipt(recId: UUID) : Receipt
+
     @Query("SELECT * FROM receiptfoodcrossref WHERE receiptId == :recId")
 //    fun getReceiptFoodCrossRefByReceiptId(recId : UUID) : Flow<List<ReceiptFoodCrossRef>>
     suspend fun getReceiptFoodCrossRefByReceiptId(recId : UUID) : List<ReceiptFoodCrossRef>
