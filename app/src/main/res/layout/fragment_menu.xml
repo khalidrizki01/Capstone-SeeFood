@@ -343,7 +343,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <Button
-                            android:id="@id/btn_add1"
+                            android:id="@+id/btn_add1"
                             android:contentDescription="button_tambah"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -377,7 +377,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <Button
-                            android:id="@id/btn_add2"
+                            android:id="@+id/btn_add2"
                             android:contentDescription="button_tambah"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -411,7 +411,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <Button
-                            android:id="@id/btn_add3"
+                            android:id="@+id/btn_add3"
                             android:contentDescription="button_tambah"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -453,7 +453,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <Button
-                            android:id="@id/btn_add4"
+                            android:id="@+id/btn_add4"
                             android:contentDescription="button_tambah"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -487,7 +487,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <Button
-                            android:id="@id/btn_add5"
+                            android:id="@+id/btn_add5"
                             android:contentDescription="button_tambah"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -523,7 +523,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <Button
-                            android:id="@id/btn_add6"
+                            android:id="@+id/btn_add6"
                             android:contentDescription="button_tambah"
                             android:layout_width="48dp"
                             android:layout_height="48dp"

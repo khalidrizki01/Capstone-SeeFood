@@ -103,7 +103,7 @@ interface FoodDao {
 
     @Query("SELECT * FROM receipt WHERE createdAt >= :date")
 //    fun getReceiptFrom(date: LocalDateTime) : Flow<List<Receipt>>
-    suspend fun getReceiptFrom(date: LocalDateTime) : List<Receipt>
+     fun getReceiptFrom(date: LocalDateTime) : List<Receipt>
 
     @Query("DELETE FROM food")
     suspend fun deleteAllFood()
