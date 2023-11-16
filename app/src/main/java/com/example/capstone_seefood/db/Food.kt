@@ -17,5 +17,6 @@ data class Food(
     val foodId : Int,
     val name : String,
     val photo : String,
-    val price : Int? = null,    val isSell : Boolean = false
+    val price : Int? = null,
+    val isSell : Boolean = false
 ) : Parcelable

@@ -11,6 +11,7 @@ import com.example.capstone_seefood.db.relations.FoodWithReceipts
 //import com.example.capstone_seefood.db.relations.FoodWithReceipts
 import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
 import com.example.capstone_seefood.db.relations.ReceiptWithFoods
+import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -22,13 +23,13 @@ interface FoodDao {
 //    fun insert(receiptFoodCrossRef: ReceiptFoodCrossRef) : Long
 //    @Insert
 //    fun insert(food: Food): Long
-    @Transaction
-    @Query("SELECT * FROM receipt")
-    fun getAllFullReceipts() : List<ReceiptWithFoods>
+//    @Transaction
+//    @Query("SELECT * FROM receipt")
+//    fun getAllFullReceipts() : List<ReceiptWithFoods>
 
     @Transaction
     @Query("SELECT * FROM receipt WHERE receiptid == :recid LIMIT 1")
-    fun getReceiptWithFoods(recid : String) : List<ReceiptWithFoods>
+    fun getReceiptWithFoodsById(recid : String) : Flow<List<ReceiptWithFoods>>
 
 //  Untuk meng-insert data makanan
     @Insert
@@ -43,20 +44,20 @@ interface FoodDao {
     suspend fun insertReceiptFoodCrossRef(crossRef: ReceiptFoodCrossRef)
 
     @Query("SELECT * FROM receiptfoodcrossref WHERE receiptId == :recId")
-    suspend fun getReceiptFoodCrossRef(recId : String) : List<ReceiptFoodCrossRef>
+    suspend fun getReceiptFoodCrossRef(recId : String) : Flow<List<ReceiptFoodCrossRef>>
 
     @Query("SELECT * FROM receiptfoodcrossref")
-    suspend fun getAllReceiptFoodCrossRef() : List<ReceiptFoodCrossRef>
+    fun getAllReceiptFoodCrossRef() : Flow<List<ReceiptFoodCrossRef>>
 
 //    Insert Many Receipt Food Cross Ref: Ketika menyimpan data receipt?
 
 //  Untuk menngambil data makanan yang dijual
     @Query("SELECT * FROM food WHERE issell == 1")
-    fun getAvailableFood(): List<Food>
+    fun getAvailableFood(): Flow<List<Food>>
 
 //  Untuk mengambil data makanan yang tidak dijual
     @Query("SELECT * FROM food WHERE issell == 0")
-    fun getUnavailableFood(): List<Food>
+    fun getUnavailableFood(): Flow<List<Food>>
 
     @Transaction
 //    @Query("SELECT foodId, SUM(totalItemPrice) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
@@ -67,7 +68,7 @@ interface FoodDao {
         WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt >= :startDate)
         GROUP BY rf.foodId
     """)
-    suspend fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
+    fun getTotalItemPricePerFoodId(startDate: LocalDateTime): Flow<List<FoodSum>>
 
     @Transaction
 //    @Query("SELECT foodId, SUM(quantity) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
@@ -78,14 +79,14 @@ interface FoodDao {
         WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt >= :startDate)
         GROUP BY rf.foodId
     """)
-    fun getQuantityPerFoodId(startDate: LocalDateTime): List<FoodSum>
+    fun getQuantityPerFoodId(startDate: LocalDateTime): Flow<List<FoodSum>>
 
     @Transaction
     @Query("SELECT * FROM food WHERE name == :foodName LIMIT 1")
     suspend fun getFoodBasedOnName(foodName : String) : Food
 
     @Query("SELECT * FROM receipt WHERE createdAt >= :date")
-    fun getReceiptFrom(date: LocalDateTime) : List<Receipt>
+    fun getReceiptFrom(date: LocalDateTime) : Flow<List<Receipt>>
 
 //  Untuk mengambil data makanan yang terjual dari satu nota/penjualan
 //    @Transaction
@@ -98,13 +99,13 @@ interface FoodDao {
 //    fun getFoodWithReceipts(foodId : Long) : List<FoodWithReceipts>
 
     @Query("DELETE FROM food")
-    fun deleteAllFood()
+    suspend fun deleteAllFood()
 
     @Query("DELETE FROM receipt")
-    fun deleteAllReceipts()
+    suspend fun deleteAllReceipts()
 
     @Query("DELETE FROM receiptfoodcrossref")
-    fun deleteAllReceiptFoodCR()
+    suspend fun deleteAllReceiptFoodCR()
     @Update
-    fun updateFood(food: Food)
+    suspend fun updateFood(food: Food)
 }
