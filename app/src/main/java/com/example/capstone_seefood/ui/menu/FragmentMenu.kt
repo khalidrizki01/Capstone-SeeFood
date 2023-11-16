@@ -1,3 +1,5 @@
+package com.example.capstone_seefood.ui.menu
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -58,7 +60,7 @@ class FragmentMenu(val name: CharSequence) : Fragment() {
                 R.layout.fragment_menu,
                 scrollView,
                 false) as MaterialCardView
-            cardView.findViewById<ImageView>(R.id.imageView).setImageResource(menu.imageResource)
+            cardView.findViewById<ImageView>(R.id.imageViewItem).setImageResource(menu.imageResource)
             cardView.findViewById<TextView>(R.id.textViewItemName).text= menu.name
             cardView.findViewById<TextView>(R.id.textViewItemPrice).text= menu.price
             
