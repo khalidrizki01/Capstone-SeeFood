@@ -13,7 +13,7 @@ import com.example.capstone_seefood.db.relations.ReceiptFoodCrossRef
         Receipt::class,
         ReceiptFoodCrossRef::class
     ],
-    version=2
+    version=3
 )
 @TypeConverters(Converter::class)
 abstract class FoodDatabase : RoomDatabase() {

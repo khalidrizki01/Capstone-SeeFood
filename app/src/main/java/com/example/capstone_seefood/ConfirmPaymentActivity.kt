@@ -89,7 +89,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
             myFile.name,
             requestFile
         )
-
+        recId = UUID.randomUUID()
         // Memanggil API
         val call = apiService.uploadImage(image)
         call.enqueue(object : Callback<ResultModel> {
@@ -121,6 +121,7 @@ class ConfirmPaymentActivity : AppCompatActivity() {
 
                                 // Menambahkan total item price ke total harga yang harus dibayar dalam 1 order
                                 totalPrice += totalItemPrice
+                                Log.d(TAG, "Total Price: ${totalPrice.toString()}")
 
                                 // Menambahkan tiap data iterasi ke object parcel yang nanti dibawa ke activity selanjutnya
                                 toStoreFoods.add(TempFood(foodItem.foodId, foodItem.name, food.count, foodItem.price!!, totalItemPrice))
@@ -135,20 +136,18 @@ class ConfirmPaymentActivity : AppCompatActivity() {
                                 Log.d(TAG, "Berhasil menambah price ${toStoreFoods[index].price} ke table row")
                                 addTextViewToTableRow(tableRow, totalItemPrice.toString())
                                 Log.d(TAG, "Berhasil menambah total item price ${toStoreFoods[index].totalItemPrice} ke table row")
+                                foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, foodItem.foodId, foodItem.name,foodItem.price, food.count))
                             }
+
                             GlobalScope.launch(Dispatchers.Main) {
-                                // Menambahkan table row ke table layout di xml
-                                binding.tbOrder.addView((tableRow))
+                                binding.tbOrder.addView(tableRow, index+1)
                                 Log.d(TAG, "Berhasil menambah table row ke table layout di xml")
+                                if (index == listOrderedFood.size - 1) {
+                                    // Jika ini adalah iterasi terakhir, maka tampilkan total harga ke table layout di xml
+                                    binding.tvTotalHarga.text = totalPrice.toString()
+                                }
                             }
-                            // Memasukkan data tiap makanan ke database
-                            foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, foodItem.foodId, foodItem.name,foodItem.price, food.count))
-                            Log.d(TAG, "berhasil meng-insert recId $recId ke database")
                         }
-                    }
-                    // Menampilkan total harga ke table layout di xml
-                    GlobalScope.launch(Dispatchers.Main) {
-                        binding.tvTotalHarga.text = totalPrice.toString()
                     }
                 }
             }
@@ -161,66 +160,6 @@ class ConfirmPaymentActivity : AppCompatActivity() {
         val bitmap = BitmapFactory.decodeFile(myFile.path)
         binding.imgOrder.setImageBitmap(bitmap)
 
-//        // Set gambar ke ImageView
-//        binding.imgOrder.setImageBitmap(bitmap)
-//        var count: Int = 1
-//        for ((index, rowData) in data.withIndex()) {
-//            val tableRow = TableRow(this)
-//            for ((i, item) in rowData.withIndex()) {
-//                val textView = TextView(this)
-//                textView.text = item
-//                textView.setPadding(5, 5, 5, 5)
-//                if(i==0) {
-//                    textView.gravity = Gravity.START
-//                    textView.setPadding(60, 5, 5,5 )
-//                } else {
-//                    textView.gravity = Gravity.CENTER
-//                }
-//                tableRow.addView(textView)
-//            }
-////            var recId = UUID.randomUUID()
-//            binding.tbOrder.addView(tableRow, count)
-//            count++
-//        }
-//        binding.tvTotalHarga.text = "Rp13.400"
-//        Log.d("CONFIRM PAYMENT", "tabel selesai")
-//        recId = UUID.randomUUID()
-//        GlobalScope.launch {
-//            foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, 0, "Nasi",3000, 1))
-//            foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, 1, "Ayam Goreng",8000, 1))
-//            foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, 2, "Tahu",1000, 1))
-//            foodDao.insertReceiptFoodCrossRef(ReceiptFoodCrossRef(recId, 3, "Tempe",700, 2))
-//            foodDao.insertReceipt(Receipt(recId, 13400) )
-//            stored = foodDao.getAllReceiptFoodCrossRef()[0].receiptId
-//            Log.d("CONFIRM PAYMENT", "selesai insert")
-//        }
-
-//        var recId = UUID.randomUUID()
-//        for ((index, food) in listOrderedFood.withIndex()) {
-//                GlobalScope.launch {
-
-//            val tableRow = TableRow(this)
-//            val textView = TextView(this)
-//            textView.text = name
-//            textView.layoutParams = TableRow.LayoutParams(
-//                TableRow.LayoutParams.WRAP_CONTENT,
-//                TableRow.LayoutParams.WRAP_CONTENT
-//            )
-//            tableRow.addView(textView)
-//            binding.tbOrder.addView(tableRow)
-//        }
-
-//        detector = FoodDetector(this)
-//        detector.setup()
-//        detector.detect(result)
-
-//        val predictResult = mlTransform(result, this)
-
-
-//        listOrderedFood = mlTransform(scannedBitmap, this)
-
-//==========================
-
         binding.btnConfirmPayment.setOnClickListener {
             goToReceiptActivity()
         }
@@ -229,16 +168,16 @@ class ConfirmPaymentActivity : AppCompatActivity() {
     private fun addTextViewToTableRow(tableRow: TableRow, text: String) {
         val textView = TextView(this@ConfirmPaymentActivity)
         textView.text = text
-        textView.layoutParams = TableRow.LayoutParams(
+        val params = TableRow.LayoutParams(
             TableRow.LayoutParams.WRAP_CONTENT,
             TableRow.LayoutParams.WRAP_CONTENT
         )
+        params.gravity = Gravity.CENTER // Menetapkan gravity ke tengah
+        textView.layoutParams = params
         tableRow.addView(textView)
     }
 
     private fun goToReceiptActivity() {
-
-
         Log.d(TAG, "Mau masuk receipt")
 //        var recId = UUID.randomUUID()
 //        GlobalScope.launch {
