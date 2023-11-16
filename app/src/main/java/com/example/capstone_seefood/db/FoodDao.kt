@@ -70,16 +70,6 @@ interface FoodDao {
     """)
     suspend fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
 
-    @Transaction
-//    @Query("SELECT foodId, SUM(totalItemPrice) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
-    @Query("""
-        SELECT receiptId, SUM(rf.totalItemPrice) as sum
-        FROM ReceiptFoodCrossRef rf
-        INNER JOIN Food f ON rf.foodId = f.foodId
-        WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt >= :startDate)
-        GROUP BY rf.foodId
-    """)
-    suspend fun getHistory(startDate: LocalDateTime): ArrayList<PaymentID>
 
     @Transaction
 //    @Query("SELECT foodId, SUM(quantity) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
@@ -98,6 +88,8 @@ interface FoodDao {
 
     @Query("SELECT * FROM receipt WHERE createdAt >= :date")
     fun getReceiptFrom(date: LocalDateTime) : List<Receipt>
+
+
 
 //  Untuk mengambil data makanan yang terjual dari satu nota/penjualan
 //    @Transaction
