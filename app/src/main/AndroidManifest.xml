@@ -31,9 +31,6 @@
             android:name=".ReceiptActivity"
             android:exported="false" />
         <activity
-            android:name=".RealtimeActivity"
-            android:exported="false" />
-        <activity
             android:name=".ConfirmPaymentActivity"
             android:exported="false" />
         <activity
@@ -55,9 +52,6 @@
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".HistoryPenjualanActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".ScanActivity"
             android:screenOrientation="landscape"></activity>
     </application>
 
