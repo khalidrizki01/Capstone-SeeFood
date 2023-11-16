@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.example.capstone_seefood.PaymentID
 import com.example.capstone_seefood.db.relations.FoodSum
 import com.example.capstone_seefood.db.relations.FoodWithReceipts
 //import com.example.capstone_seefood.db.relations.FoodWithReceipts
@@ -68,6 +69,17 @@ interface FoodDao {
         GROUP BY rf.foodId
     """)
     suspend fun getTotalItemPricePerFoodId(startDate: LocalDateTime): List<FoodSum>
+
+    @Transaction
+//    @Query("SELECT foodId, SUM(totalItemPrice) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
+    @Query("""
+        SELECT receiptId, SUM(rf.totalItemPrice) as sum
+        FROM ReceiptFoodCrossRef rf
+        INNER JOIN Food f ON rf.foodId = f.foodId
+        WHERE rf.receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt >= :startDate)
+        GROUP BY rf.foodId
+    """)
+    suspend fun getHistory(startDate: LocalDateTime): ArrayList<PaymentID>
 
     @Transaction
 //    @Query("SELECT foodId, SUM(quantity) as sum FROM ReceiptFoodCrossRef WHERE receiptId IN (SELECT receiptId FROM Receipt WHERE createdAt > :startDate) GROUP BY foodId")
