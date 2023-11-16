@@ -13,6 +13,7 @@
         android:layout_height="58dp"
         android:layout_marginTop="96dp"
         android:text="@string/title_receipt"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -21,13 +22,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvReceiptId"
         android:layout_width="93dp"
         android:layout_height="29dp"
         android:layout_marginTop="16dp"
         android:text="SeeFood"
+        android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,13 +40,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        app:layout_constraintHorizontal_bias="0.14"
         android:text="Tanggal Pembelian"
         android:textColor="@color/black"
         android:textStyle="normal|bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tvReceiptId" />
 
 
     <androidx.cardview.widget.CardView
@@ -138,11 +140,11 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tvTotalTransaksi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="3"
-                        android:layout_gravity="right"
-                        android:paddingEnd="32dp"
+                        android:layout_gravity="center_horizontal"
                         android:text="0"
                         android:textStyle="bold" />
                 </TableRow>
@@ -185,5 +187,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="637dp" />
+
+    <TextView
+        android:id="@+id/tvTanggalTransaksi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="452dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
