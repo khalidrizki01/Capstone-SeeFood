@@ -47,10 +47,10 @@ class MainActivity : AppCompatActivity() {
 
         foodDao = FoodDatabase.getInstance(this).foodDao
         GlobalScope.launch {
-            foodDao.deleteAllReceipts()
-            foodDao.deleteAllReceiptFoodCR()
+//            foodDao.deleteAllReceipts()
+//            foodDao.deleteAllReceiptFoodCR()
 
-            storeReceipt()
+//            storeReceipt()
 
             updateCharts()
 
